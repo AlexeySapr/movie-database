@@ -1,0 +1,10 @@
+{{#each this}}
+<li class="list-item">
+	<a href={{src.original}}>
+		<div class="thumb">
+			<img data-src={{src.landscape}} alt="photo" class="lazyload">
+		</div>
+		<div class="descr">author: {{photographer}}</div>
+	</a>
+</li>
+{{/each}}

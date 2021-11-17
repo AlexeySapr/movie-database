@@ -1,6 +1,6 @@
 {{#each this}}
 <li class="list-item">
-	<a href="#">
+	<button type="button" id='{{id}}'>
 		<div class="thumb">
 			<img src='https://image.tmdb.org/t/p/w300{{poster_path}}' alt="photo">
 		</div>
@@ -8,6 +8,7 @@
 			<p class="title">{{title}}</p>
 			<p class="genres-year">{{genre_ids}} | {{release_date}} <span class="vote">{{vote_average}}</span></p>
 		</div>
-	</a>
+	</button>
 </li>
 {{/each}}
+

@@ -31,19 +31,21 @@ async function onInput(event) {
 }
 /******************************************************** */
 
-// searchForm.addEventListener('submit', onSubmit);
+galleryList.addEventListener('click', onClick);
 
-// function onSubmit(event) {
-//   event.preventDefault();
+function onClick(event) {
+  const movieID = event.target;
+  console.log(movieID);
 
-//   getData();
-// }
+  // apiService.getMovieById(370172);
+}
 
 getData();
 
 async function getData() {
   try {
     const movies = await apiService.getMovies();
+    console.log(movies);
     showMovies(movies.results);
   } catch (error) {
     console.error(error);

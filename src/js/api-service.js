@@ -1,21 +1,31 @@
 import axios from 'axios';
 
-const AUTH_KEY = '563492ad6f91700001000001926c4fbb77504078a21e31a37ce51bbd';
-axios.defaults.headers.common['Authorization'] = AUTH_KEY;
+// Ключ API (v3 auth)
+// 93fd20970d74d9a3f9466d8d6c9e6297
+
+// Ключ доступа к API (v4 auth)
+// eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZkMjA5NzBkNzRkOWEzZjk0NjZkOGQ2YzllNjI5NyIsInN1YiI6IjYxOTNhYjExNDJmMTlmMDA0MzFlZTkzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z6zVAqAKYmCRhBa4xmofDsVBFw9-x8O5I_GnOqiw-F8
+
+const AUTH_KEY =
+  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZkMjA5NzBkNzRkOWEzZjk0NjZkOGQ2YzllNjI5NyIsInN1YiI6IjYxOTNhYjExNDJmMTlmMDA0MzFlZTkzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z6zVAqAKYmCRhBa4xmofDsVBFw9-x8O5I_GnOqiw-F8';
+axios.defaults.headers.common['Authorization'] = `Bearer ${AUTH_KEY}`;
 
 export default {
-  config: {
-    params: {
-      query: '',
-      page: 1,
-      per_page: 36,
-    },
+  async getMovies() {
+    try {
+      const response = await axios.get('https://api.themoviedb.org/3/trending/movie/week');
+      // console.log('response: ', response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   },
 
-  async getFotos() {
+  async getGenres() {
     try {
-      const response = await axios.get('https://api.pexels.com/v1/search', this.config);
-      return response.data.photos;
+      const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list');
+      // console.log('response: ', response.data);
+      return response.data;
     } catch (error) {
       console.error(error);
     }

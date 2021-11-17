@@ -1,10 +1,13 @@
 {{#each this}}
 <li class="list-item">
-	<a href={{src.original}}>
+	<a href="#">
 		<div class="thumb">
-			<img data-src={{src.landscape}} alt="photo" class="lazyload">
+			<img src='https://image.tmdb.org/t/p/w300{{poster_path}}' alt="photo">
 		</div>
-		<div class="descr">author: {{photographer}}</div>
+		<div class="descr">
+			<p class="title">{{title}}</p>
+			<p class="genres-year">{{genre_ids}} | {{release_date}} <span class="vote">{{vote_average}}</span></p>
+		</div>
 	</a>
 </li>
 {{/each}}

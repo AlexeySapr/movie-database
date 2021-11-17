@@ -3,20 +3,20 @@
   "version": "1.1.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://AlexeySapr.github.io/work-with-pexels-api",
+  "homepage": "https://AlexeySapr.github.io/movie-database",
   "scripts": {
     "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /work-with-pexels-api/"
+    "build": "parcel build src/*.html --public-url /movie-database/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexeySapr/work-with-pexels-api.git"
+    "url": "git+https://github.com/AlexeySapr/movie-database.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/goitacademy/parcel-project-template/issues"
+    "url": "https://github.com/AlexeySapr/movie-database/issues"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5",

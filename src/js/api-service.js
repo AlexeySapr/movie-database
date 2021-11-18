@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { genres } from './genres';
 
 // Ключ API (v3 auth)
 // 93fd20970d74d9a3f9466d8d6c9e6297
@@ -10,26 +11,30 @@ const AUTH_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5M2ZkMjA5NzBkNzRkOWEzZjk0NjZkOGQ2YzllNjI5NyIsInN1YiI6IjYxOTNhYjExNDJmMTlmMDA0MzFlZTkzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z6zVAqAKYmCRhBa4xmofDsVBFw9-x8O5I_GnOqiw-F8';
 axios.defaults.headers.common['Authorization'] = `Bearer ${AUTH_KEY}`;
 
-async function getGenres() {
-  try {
-    const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list');
-    return response.data.genres;
-  } catch (error) {
-    console.error(error);
-  }
-}
+// async function getGenres() {
+//   try {
+//     const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list');
+//     return response.data.genres;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
 function getYear(date) {
   return date ? date.slice(0, 4) : undefined;
 }
 
-function Genres(genresArray, idArray) {
+function Genres(idArray) {
   const resArr = [];
   idArray.forEach(id => {
-    for (let i = 0; i < genresArray.length; i++) {
-      genresArray[i].id === id ? resArr.push(genresArray[i].name) : undefined;
+    for (let i = 0; i < genres.length; i++) {
+      genres[i].id === id ? resArr.push(genres[i].name) : undefined;
     }
   });
+
+  if (resArr.length > 2) {
+    resArr.splice(2, resArr.length, 'Other');
+  }
   return resArr.join(', ');
 }
 
@@ -47,10 +52,10 @@ export default {
 
       const movies = await response.data;
 
-      const genresList = await getGenres();
+      // const genresList = await getGenres();
 
       movies.results.forEach(movie => {
-        movie.genre_ids = Genres(genresList, movie.genre_ids);
+        movie.genre_ids = Genres(movie.genre_ids);
         movie.release_date = getYear(movie.release_date);
       });
 

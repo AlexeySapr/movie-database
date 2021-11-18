@@ -5,6 +5,7 @@ import card from './template/card.hbs';
 import apiService from './js/api-service';
 
 const galleryList = document.querySelector('.list');
+let listItems;
 const searchForm = document.querySelector('.search-form');
 
 /*******************поиск по запросу******************************* */
@@ -31,10 +32,10 @@ async function onInput(event) {
 }
 /******************************************************** */
 
-galleryList.addEventListener('click', onClick);
+// galleryList.addEventListener('click', onClick);
 
 function onClick(event) {
-  const movieID = event.target;
+  const movieID = event.currentTarget.firstElementChild.dataset.idNumber;
   console.log(movieID);
 
   // apiService.getMovieById(370172);
@@ -45,8 +46,13 @@ getData();
 async function getData() {
   try {
     const movies = await apiService.getMovies();
-    console.log(movies);
+    // console.log(movies);
     showMovies(movies.results);
+    listItems = galleryList.querySelectorAll('li');
+
+    listItems.forEach(item => {
+      item.addEventListener('click', onClick);
+    });
   } catch (error) {
     console.error(error);
   }

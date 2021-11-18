@@ -2,9 +2,23 @@ body {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .conteiner {
   max-width: 1600px;
   margin: 0 auto;
+  padding: 20px;
 }
 
 ul {
@@ -16,4 +30,16 @@ ul {
 a {
   text-decoration: none;
   color: #5c5c5c;
+}
+
+@media screen and (min-width: 768px) {
+  .conteiner {
+    padding: 60px 75px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .conteiner {
+    padding: 60px 71px;
+  }
 }

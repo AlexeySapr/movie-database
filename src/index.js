@@ -1,7 +1,7 @@
 import './sass/main.scss';
 
 import debounce from 'lodash.debounce';
-import card from './template/card.hbs';
+import card from './template/card-library.hbs';
 import apiService from './js/api-service';
 
 const galleryList = document.querySelector('.list');
@@ -35,8 +35,9 @@ async function onInput(event) {
 // galleryList.addEventListener('click', onClick);
 
 function onClick(event) {
-  const movieID = event.currentTarget.firstElementChild.dataset.idNumber;
+  const movieID = event.currentTarget.dataset.idNumber;
   console.log(movieID);
+  // alertID(movieID);
 
   // apiService.getMovieById(370172);
 }
@@ -62,3 +63,9 @@ function showMovies(movies) {
   // galleryList.insertAdjacentHTML('beforeend', card(moviesArr));
   galleryList.innerHTML = card(movies);
 }
+
+// function alertID(id) {
+//   alert('Film ID: ' + id);
+// }
+
+console.log((8).toFixed(1));

@@ -20,11 +20,11 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${AUTH_KEY}`;
 //   }
 // }
 
-function getYear(date) {
+function formatYear(date) {
   return date ? date.slice(0, 4) : undefined;
 }
 
-function Genres(idArray) {
+function formatGenres(idArray) {
   const resArr = [];
   idArray.forEach(id => {
     for (let i = 0; i < genres.length; i++) {
@@ -36,6 +36,10 @@ function Genres(idArray) {
     resArr.splice(2, resArr.length, 'Other');
   }
   return resArr.join(', ');
+}
+
+function formatVote(voteNumber) {
+  return voteNumber.toFixed(1);
 }
 
 export default {
@@ -55,8 +59,9 @@ export default {
       // const genresList = await getGenres();
 
       movies.results.forEach(movie => {
-        movie.genre_ids = Genres(movie.genre_ids);
-        movie.release_date = getYear(movie.release_date);
+        movie.genre_ids = formatGenres(movie.genre_ids);
+        movie.release_date = formatYear(movie.release_date);
+        movie.vote_average = formatVote(movie.vote_average);
       });
 
       return movies;

@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce';
 import card from './template/card-library.hbs';
 import apiService from './js/api-service';
 
+// import movieCard from './template/movie-card.hbs';
+
 const galleryList = document.querySelector('.list');
 let listItems;
 const searchForm = document.querySelector('.search-form');
@@ -67,5 +69,3 @@ function showMovies(movies) {
 // function alertID(id) {
 //   alert('Film ID: ' + id);
 // }
-
-console.log((8).toFixed(1));

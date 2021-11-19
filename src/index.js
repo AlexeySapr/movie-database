@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 import card from './template/card-library.hbs';
 import apiService from './js/api-service';
 
-// import movieCard from './template/movie-card.hbs';
+import movieCard from './template/movie-card.hbs';
 
 const galleryList = document.querySelector('.list');
 let listItems;
@@ -36,9 +36,14 @@ async function onInput(event) {
 
 // galleryList.addEventListener('click', onClick);
 
-function onClick(event) {
+async function onClick(event) {
   const movieID = event.currentTarget.dataset.idNumber;
-  console.log(movieID);
+
+  const movie = await apiService.getMovieById(movieID);
+
+  galleryList.innerHTML = movieCard(movie);
+
+  // console.log(movie);
   // alertID(movieID);
 
   // apiService.getMovieById(370172);

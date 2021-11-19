@@ -73,18 +73,10 @@ export default {
   async getMovieById(movieId) {
     try {
       const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`);
-      const movies = await response.data;
-
-      console.log(movies);
-
-      // const genresList = await getGenres();
-
-      // movies.results.forEach(movie => {
-      //   movie.genre_ids = Genres(genresList, movie.genre_ids);
-      //   movie.release_date = getYear(movie.release_date);
-      // });
-
-      // return movies;
+      const movie = await response.data;
+      const movieGenres = movie.genres.map(element => element.name).join(', ');
+      movie.genres = movieGenres;
+      return movie;
     } catch (error) {
       console.error(error);
     }

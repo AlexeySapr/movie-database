@@ -1,9 +1,13 @@
 {{#each this}}
 <li class="list-item" data-id-number='{{id}}'>
 	<div class="thumb">
+		{{#if poster_path}}
 		<img srcset=" https://image.tmdb.org/t/p/w500{{poster_path}} 1x,
- 				https://image.tmdb.org/t/p/w780{{poster_path}} 2x" src='https://image.tmdb.org/t/p/w500{{poster_path}}'
+		 				https://image.tmdb.org/t/p/w780{{poster_path}} 2x" src='https://image.tmdb.org/t/p/w500{{poster_path}}'
 			alt="photo">
+		{{else}}
+		<img src='../images/emty.jpg' alt="photo">
+		{{/if}}
 	</div>
 	<div class="descr">
 		<h4 class="title">{{title}}</h4>

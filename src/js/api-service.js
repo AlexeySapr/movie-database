@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { genres } from './genres';
 
+import pic from '../images/emty.jpg';
+
 // Ключ API (v3 auth)
 // 93fd20970d74d9a3f9466d8d6c9e6297
 
@@ -42,6 +44,12 @@ function formatVote(voteNumber) {
   return voteNumber.toFixed(1);
 }
 
+function formatPoster(pathToPoster) {
+  if (!pathToPoster) {
+    return pic;
+  }
+}
+
 export default {
   async getMovies(query) {
     let response;
@@ -62,6 +70,7 @@ export default {
         movie.genre_ids = formatGenres(movie.genre_ids);
         movie.release_date = formatYear(movie.release_date);
         movie.vote_average = formatVote(movie.vote_average);
+        movie.own_poster_path = formatPoster(movie.poster_path);
       });
 
       return movies;

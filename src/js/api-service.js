@@ -44,12 +44,6 @@ function formatVote(voteNumber) {
   return voteNumber.toFixed(1);
 }
 
-function formatPoster(pathToPoster) {
-  if (!pathToPoster) {
-    return pic;
-  }
-}
-
 export default {
   async getMovies(query) {
     let response;
@@ -70,7 +64,10 @@ export default {
         movie.genre_ids = formatGenres(movie.genre_ids);
         movie.release_date = formatYear(movie.release_date);
         movie.vote_average = formatVote(movie.vote_average);
-        movie.own_poster_path = formatPoster(movie.poster_path);
+
+        if (!movie.poster_path) {
+          movie.own_poster_path = pic;
+        }
       });
 
       return movies;

@@ -46,11 +46,15 @@ async function onInput(event) {
     const movies = await apiService.getMovies(query);
     // console.log(movies);
     showMovies(movies.results);
+
+    galleryList.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', onClick);
+    });
   } catch (error) {
     console.error(error);
   }
 }
-/******************************************************** */
+
 getData();
 
 async function getData() {
@@ -71,6 +75,8 @@ async function getData() {
 async function onClick(event) {
   const movieID = event.currentTarget.dataset.idNumber;
 
+  console.log(movieID);
+
   const movie = await apiService.getMovieById(movieID);
 
   refModal.innerHTML = movieCard(movie);
@@ -81,6 +87,7 @@ async function onClick(event) {
   window.addEventListener('click', onWinClick);
 }
 
+/************************закрытие модалки****************************** */
 function onEscPressed(event) {
   if (event.key === 'Escape') {
     console.log('Escape pressed');
@@ -91,11 +98,6 @@ function onEscPressed(event) {
   window.removeEventListener('keydown', onEscPressed);
 }
 
-function showMovies(movies) {
-  // galleryList.insertAdjacentHTML('beforeend', card(moviesArr));
-  galleryList.innerHTML = card(movies);
-}
-
 function onWinClick(event) {
   if (event.target.className === 'backdrop') {
     document.body.classList.toggle('modal-open');
@@ -103,3 +105,28 @@ function onWinClick(event) {
     window.removeEventListener('click', onWinClick);
   }
 }
+/****************************************************** */
+
+function showMovies(movies) {
+  // galleryList.insertAdjacentHTML('beforeend', card(moviesArr));
+  galleryList.innerHTML = card(movies);
+}
+
+/******************************************************** */
+// getData()
+//   .then(movies => {
+//     showMovies(movies.results);
+//   })
+//   .then(addListenerOnFilmClick)
+//   .catch(error => console.error(error));
+
+// async function getData() {
+//   return await apiService.getMovies();
+// }
+
+// function addListenerOnFilmClick() {
+//   galleryList.querySelectorAll('li').forEach(item => {
+//     item.addEventListener('click', onClick);
+//   });
+// }
+/******************************************************** */

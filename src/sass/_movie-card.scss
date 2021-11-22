@@ -1,0 +1,20 @@
+.movie-card {
+  display: flex;
+}
+
+.movie-card .thumb {
+  margin-right: 25px;
+}
+
+.movie-card .title,
+.movie-card .descr-list {
+  margin-bottom: 25px;
+}
+
+.descr-list__item {
+  margin-bottom: 10px;
+}
+
+.descr-list__item span {
+  color: blueviolet;
+}

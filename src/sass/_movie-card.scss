@@ -25,5 +25,7 @@
 
 .buttons-container button {
   padding: 5px 10px;
+}
+button[data-watched] {
   margin-right: 30px;
 }

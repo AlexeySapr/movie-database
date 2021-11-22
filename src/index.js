@@ -6,6 +6,8 @@ const picObj = {
   pathToPic: pic,
 };
 
+const movieObj = {};
+
 // console.log(picObj);
 
 import debounce from 'lodash.debounce';
@@ -78,6 +80,11 @@ async function onClick(event) {
   console.log(movieID);
 
   const movie = await apiService.getMovieById(movieID);
+  console.log(movie);
+
+  // movieObj.id = movie.id;
+
+  // console.log(movieObj);
 
   refModal.innerHTML = movieCard(movie);
   document.body.classList.toggle('modal-open');
@@ -85,6 +92,12 @@ async function onClick(event) {
 
   window.addEventListener('keydown', onEscPressed);
   window.addEventListener('click', onWinClick);
+
+  document.querySelector('button[data-watched]').addEventListener('click', addWatched);
+}
+
+function addWatched(event) {
+  console.log('movie:', movie);
 }
 
 /************************закрытие модалки****************************** */

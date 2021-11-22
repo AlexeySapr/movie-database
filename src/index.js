@@ -18,6 +18,9 @@ const galleryList = document.querySelector('.list');
 let listItems;
 const searchForm = document.querySelector('.search-form');
 
+const refModal = document.querySelector('.modal');
+const refBackdrop = document.querySelector('[data-modal]');
+
 // function showMovies(somePic) {
 //   galleryList.innerHTML = card(somePic);
 // }
@@ -48,22 +51,6 @@ async function onInput(event) {
   }
 }
 /******************************************************** */
-
-// galleryList.addEventListener('click', onClick);
-
-// async function onClick(event) {
-//   const movieID = event.currentTarget.dataset.idNumber;
-
-//   const movie = await apiService.getMovieById(movieID);
-
-//   galleryList.innerHTML = movieCard(movie);
-
-//   // console.log(movie);
-//   // alertID(movieID);
-
-//   // apiService.getMovieById(370172);
-// }
-
 getData();
 
 async function getData() {
@@ -71,14 +58,37 @@ async function getData() {
     const movies = await apiService.getMovies();
     // console.log(movies);
     showMovies(movies.results);
-    // listItems = galleryList.querySelectorAll('li');
+    listItems = galleryList.querySelectorAll('li');
 
-    // listItems.forEach(item => {
-    //   item.addEventListener('click', onClick);
-    // });
+    listItems.forEach(item => {
+      item.addEventListener('click', onClick);
+    });
   } catch (error) {
     console.error(error);
   }
+}
+
+async function onClick(event) {
+  const movieID = event.currentTarget.dataset.idNumber;
+
+  const movie = await apiService.getMovieById(movieID);
+
+  refModal.innerHTML = movieCard(movie);
+  document.body.classList.toggle('modal-open');
+  refBackdrop.classList.toggle('is-hidden');
+
+  window.addEventListener('keydown', onEscPressed);
+  window.addEventListener('click', onWinClick);
+}
+
+function onEscPressed(event) {
+  if (event.key === 'Escape') {
+    console.log('Escape pressed');
+    document.body.classList.toggle('modal-open');
+    refBackdrop.classList.toggle('is-hidden');
+  }
+
+  window.removeEventListener('keydown', onEscPressed);
 }
 
 function showMovies(movies) {
@@ -86,6 +96,10 @@ function showMovies(movies) {
   galleryList.innerHTML = card(movies);
 }
 
-// function alertID(id) {
-//   alert('Film ID: ' + id);
-// }
+function onWinClick(event) {
+  if (event.target.className === 'backdrop') {
+    document.body.classList.toggle('modal-open');
+    refBackdrop.classList.toggle('is-hidden');
+    window.removeEventListener('click', onWinClick);
+  }
+}

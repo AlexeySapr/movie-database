@@ -164,3 +164,11 @@ window.onscroll = function () {
     document.getElementById('upbutton').style.opacity = '0';
   }
 };
+
+// <!-- jQuery -->
+// $(function () {
+//   $('#upbutton').on('click', function (e) {
+//     $('html,body').stop().animate({ scrollTop: 0 }, 1000);
+//     e.preventDefault();
+//   });
+// });

@@ -1,11 +1,34 @@
 #upbutton {
-  background: url('../images/up2.png') no-repeat top left;
-  height: 60px;
-  width: 60px;
-  bottom: 60px;
-  right: 40px;
-  cursor: pointer;
-  display: none;
+  display: inline-block;
+  background-color: #ff9800;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  margin: 30px;
   position: fixed;
-  z-index: 999;
+  bottom: 30px;
+  right: 30px;
+  opacity: 0;
+  transition: all 1s ease-out;
+  z-index: 1000;
+}
+
+#upbutton:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+
+#upbutton:active {
+  background-color: #555;
+}
+
+#upbutton::after {
+  content: '\f077';
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
 }

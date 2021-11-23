@@ -144,23 +144,11 @@ function showMovies(movies) {
 // }
 /******************************************************** */
 
-// const smoothJumpUp = function () {
-//   if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-//     window.scrollBy({
-//       top: -10,
-//       behavior: 'smooth',
-//     });
-//     setTimeout(smoothJumpUp, 20);
-//   }
-// };
-
-// console.log(document.querySelector('#upbutton'));
-
 document.querySelector('#upbutton').addEventListener('click', up);
 
-var t;
+let t;
 function up() {
-  var top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+  const top = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
   if (top > 0) {
     window.scrollBy(0, (top + 10000) / -20);
     t = setTimeout(up, 20);
@@ -170,9 +158,9 @@ function up() {
 
 window.onscroll = function () {
   let scrolled = window.pageYOffset || document.documentElement.scrollTop;
-  if (scrolled > 100) {
-    document.getElementById('upbutton').style.display = 'block';
+  if (scrolled > 1000) {
+    document.getElementById('upbutton').style.opacity = '1';
   } else {
-    document.getElementById('upbutton').style.display = 'none';
+    document.getElementById('upbutton').style.opacity = '0';
   }
 };

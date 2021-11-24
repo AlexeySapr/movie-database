@@ -7,6 +7,7 @@ const picObj = {
 };
 
 const movieObj = {};
+let watchedMoviesArr = getMoviesFromLocalStorage();
 
 // console.log(picObj);
 
@@ -74,15 +75,27 @@ async function getData() {
   }
 }
 
+function addMovieObj(movie) {
+  movieObj.id = movie.id;
+  movieObj.poster_path = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  movieObj.title = movie.title;
+  movieObj.vote_average = movie.vote_average;
+  movieObj.vote_count = movie.vote_count;
+  movieObj.popularity = movie.popularity;
+  movieObj.original_title = movie.original_title;
+  movieObj.genres = movie.genres;
+  movieObj.overview = movie.overview;
+}
+
 async function onClick(event) {
   const movieID = event.currentTarget.dataset.idNumber;
 
-  console.log(movieID);
+  // console.log(movieID);
 
   const movie = await apiService.getMovieById(movieID);
-  console.log(movie);
+  // console.log(movie);
 
-  // movieObj.id = movie.id;
+  addMovieObj(movie);
 
   // console.log(movieObj);
 
@@ -97,7 +110,16 @@ async function onClick(event) {
 }
 
 function addWatched(event) {
-  console.log('movie:', movie);
+  event.preventDefault();
+  watchedMoviesArr = getMoviesFromLocalStorage();
+  watchedMoviesArr.push(movieObj);
+
+  localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
+}
+
+function getMoviesFromLocalStorage() {
+  const res = JSON.parse(localStorage.getItem('watchedMovies'));
+  return res ? res : [];
 }
 
 /************************закрытие модалки****************************** */

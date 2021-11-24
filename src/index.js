@@ -7,7 +7,6 @@ const picObj = {
 };
 
 const movieObj = {};
-let watchedMoviesArr = getMoviesFromLocalStorage();
 
 // console.log(picObj);
 
@@ -111,7 +110,7 @@ async function onClick(event) {
 
 function addWatched(event) {
   event.preventDefault();
-  watchedMoviesArr = getMoviesFromLocalStorage();
+  const watchedMoviesArr = getMoviesFromLocalStorage();
   watchedMoviesArr.push(movieObj);
 
   localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));

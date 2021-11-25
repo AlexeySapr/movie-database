@@ -1,0 +1,90 @@
+.film-list__item {
+  margin: 0 auto 20px;
+}
+
+.film-list__item:hover,
+.film-list__item:focus {
+  cursor: pointer;
+
+  .thumb {
+    transform: scale(1.03);
+    box-shadow: 0px 0px 10px 10px rgba(34, 60, 80, 0.5);
+  }
+}
+
+.thumb {
+  margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden;
+
+  transition: all 0.25s ease-in-out;
+
+  height: 400px;
+}
+
+.descr {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 0.75em;
+  line-height: 1.16;
+}
+
+.descr__title {
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.descr__genres-year {
+  color: $accentColor;
+}
+
+.descr__vote {
+  display: inline-block;
+  background-color: $additionalAccentColor;
+  color: $whiteColor;
+  border-radius: 5px;
+  padding: 1px 9px;
+  margin-left: 5px;
+}
+
+/********************** tablet *******************************/
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .film-list__item {
+    margin-bottom: 30px;
+  }
+
+  .film-list__item:nth-child(2n + 1) {
+    margin-right: 15px;
+  }
+
+  .film-list__item:nth-child(2n) {
+    margin-left: 15px;
+  }
+
+  .descr {
+    line-height: 1.33;
+  }
+}
+
+/************************** PC ********************************/
+
+@media screen and (min-width: 1024px) {
+  .film-list__item:nth-child(3n + 1) {
+    margin-right: 18px;
+  }
+
+  .film-list__item:nth-child(3n + 2) {
+    margin-right: 9px;
+    margin-left: 9px;
+  }
+
+  .film-list__item:nth-child(3n) {
+    margin-left: 18px;
+  }
+
+  .descr {
+    line-height: 1.33;
+  }
+}

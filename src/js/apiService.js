@@ -47,12 +47,17 @@ export default class SearchAPI {
     this.searchQuery = '';
   }
 
+  //работа со страницами
   get page() {
     return this.#page;
   }
 
   set page(numOfPage) {
     this.#page = numOfPage;
+  }
+
+  ressetPage() {
+    this.#page = 1;
   }
 
   //запрос на фильмы по ключевому слову или самые популярные

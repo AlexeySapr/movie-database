@@ -6,6 +6,8 @@ import { refs } from './refs.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
+import { pagination } from './pagination.js';
+
 const apiService = new SearchAPI();
 
 getData();
@@ -14,6 +16,8 @@ async function getData() {
   try {
     const movies = await apiService.getMovies();
     // console.log(movies);
+    pagination.reset(movies.total_results);
+
     showMovies(movies.results);
   } catch (error) {
     console.error(error);
@@ -30,6 +34,7 @@ refs.inputSearch.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELA
 
 async function onInputSearch(event) {
   apiService.searchQuery = event.target.value.trim();
+  apiService.ressetPage();
 
   if (!apiService.searchQuery) {
     Loading.standard();
@@ -41,6 +46,7 @@ async function onInputSearch(event) {
   try {
     Loading.standard();
     const movies = await apiService.getMovies();
+    pagination.reset(movies.total_results);
     Loading.remove();
 
     if (movies.total_results > 0) {
@@ -53,4 +59,13 @@ async function onInputSearch(event) {
   } catch (error) {
     console.error(error);
   }
+}
+
+/*******************пагинация******************************* */
+pagination.on('afterMove', showNewPage);
+
+async function showNewPage(event) {
+  apiService.page = event.page;
+  const movies = await apiService.getMovies();
+  showMovies(movies.results);
 }

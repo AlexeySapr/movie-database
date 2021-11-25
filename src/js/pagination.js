@@ -1,11 +1,9 @@
 import Pagination from 'tui-pagination';
-
-const paginationContainer = document.getElementById('tui-pagination-container');
-
+import { refs } from './refs.js';
 
 const optionPagination = {
   totalItems: 1000,
-  itemsPerPage: 18,
+  itemsPerPage: 20,
   visiblePages: 5,
   centerAlign: true,
   usageStatistics: false,
@@ -29,5 +27,4 @@ const optionPagination = {
   },
 };
 
-const pagination = new Pagination(paginationContainer, optionPagination);
-
+export const pagination = new Pagination(refs.paginationContainer, optionPagination);

@@ -1,11 +1,15 @@
 <div class='modal__poster-container'>
+  {{#if poster_path}}
   <img
     class='modal__poster'
-    srcset=' https://image.tmdb.org/t/p/w500{{poster_path}} 1x,
+    srcset=' https://image.tmdb.org/t/p/w300{{poster_path}} 1x,
  				https://image.tmdb.org/t/p/w780{{poster_path}} 2x'
-    src='https://image.tmdb.org/t/p/w500{{poster_path}}'
+    src='https://image.tmdb.org/t/p/w300{{poster_path}}'
     alt='poster'
   />
+  {{else}}
+  <img src='{{own_poster_path}}' alt="photo">
+  {{/if}}
 </div>
 
 <div class='modal__data-container'>
@@ -33,9 +37,8 @@
     </div>
     <div class='modal__table-element'>
       <li class='modal__data-title'>Genre</li>
-      {{#each genre_ids}}
-        <li class='modal__data-description modal__data-description--genre genre-js'>{{this}}</li>
-      {{/each}}
+      <li class='modal__data-description modal__data-description--genre genre-js'>{{genres}}</li>
+      
     </div>
 
   </ul>

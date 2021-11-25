@@ -1,10 +1,13 @@
 import debounce from 'lodash.debounce';
-import card from '../templates/film-card-template.hbs';
-import SearchAPI from './apiService.js';
-import { refs } from './refs.js';
-
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+
+import { refs } from './refs.js';
+
+import card from '../templates/film-card-template.hbs';
+
+import SearchAPI from './apiService.js';
+import { openModalCard } from './modal-film-card.js';
 
 import { pagination } from './pagination.js';
 
@@ -26,6 +29,12 @@ async function getData() {
 
 function showMovies(movies) {
   refs.galleryList.innerHTML = card(movies);
+
+  const listItems = refs.galleryList.querySelectorAll('li');
+
+  listItems.forEach(item => {
+    item.addEventListener('click', openModalCard);
+  });
 }
 
 /*******************поиск по запросу******************************* */
@@ -46,7 +55,7 @@ async function onInputSearch(event) {
   try {
     Loading.standard();
     const movies = await apiService.getMovies();
-    console.log(movies);
+    // console.log(movies);
     pagination.reset(movies.total_results);
     Loading.remove();
 

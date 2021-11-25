@@ -221,6 +221,7 @@
     background: $additionalAccentColor;
     border-radius: 5px;
     border-color: $additionalAccentColor;
+    cursor: pointer;
   }
 
   &__queue-list {
@@ -244,5 +245,6 @@
     border: 1px solid $blackColor;
     box-sizing: border-box;
     border-radius: 5px;
+    cursor: pointer;
   }
 }

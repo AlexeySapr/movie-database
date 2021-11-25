@@ -29,10 +29,8 @@
   }
 }
 
-//_modal-window
-.is-open {
+body.modal-open {
   overflow: hidden;
-  opacity: 1;
 }
 
 .modal {

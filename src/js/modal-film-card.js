@@ -9,6 +9,7 @@ export function openModalCard(evt) {
   refs.buttonClose.addEventListener('click', toClickButtonClose);
   refs.modal.addEventListener('click', toClickOnOverlay);
   window.addEventListener('keydown', onEscKeyPress);
+  document.body.classList.toggle('modal-open');
 
   if (evt) {
     refs.modal.classList.remove('is-hidden');
@@ -36,6 +37,7 @@ function closeModalCard() {
   refs.buttonClose.removeEventListener('click', closeModalCard);
   refs.modal.removeEventListener('click', toClickOnOverlay);
   window.removeEventListener('keydown', onEscKeyPress);
+  document.body.classList.toggle('modal-open');
 }
 
 function toClickButtonClose(evt) {

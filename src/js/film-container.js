@@ -46,6 +46,7 @@ async function onInputSearch(event) {
   try {
     Loading.standard();
     const movies = await apiService.getMovies();
+    console.log(movies);
     pagination.reset(movies.total_results);
     Loading.remove();
 

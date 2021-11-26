@@ -2,7 +2,13 @@ import { refs } from './refs.js';
 import SearchAPI from './apiService';
 import modalCard from '../templates/modal-film-card-template.hbs';
 
-import { setMovieObj, addWatched, addQueue } from './localStorage.js';
+import {
+  setMovieObj,
+  addWatched,
+  addQueue,
+  getWatchedMovies,
+  isInWatched,
+} from './localStorage.js';
 
 const apiService = new SearchAPI();
 
@@ -27,8 +33,21 @@ async function getFilmInfo(filmId) {
     cardMarkup(filmInfo);
     setMovieObj(filmInfo);
 
-    document.querySelector('.modal__watch-list').addEventListener('click', addWatched);
-    document.querySelector('.modal__queue-list').addEventListener('click', addQueue);
+    const refWatchBtn = document.querySelector('.modal__watch-list');
+    // const refQueueBtn = document.querySelector('.modal__queue-list');
+
+    if (isInWatched(filmInfo)) {
+      refWatchBtn.classList.add('isInStorage');
+      refWatchBtn.textContent = 'REMOVE FROM WATCHED';
+    }
+
+    refWatchBtn.addEventListener('click', addWatched);
+
+    // if ('фильм в очереди') {
+    //   ('закрасить кнопку');
+    // } else {
+    //  refQueueBtn.addEventListener('click', addQueue);
+    // }
   } catch (error) {
     console.error(error);
   }

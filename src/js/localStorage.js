@@ -1,5 +1,10 @@
 const movieObj = {};
 
+// const isMovieInStorage = {
+//   isWatched: false,
+//   isQueue: false,
+// };
+
 function setMovieObj({
   id,
   poster_path,
@@ -24,19 +29,25 @@ function setMovieObj({
   //   console.log(movieObj);
 }
 
-function isInStorage(moviesArr) {
-  return moviesArr.some(movie => {
+function isInWatched(movieObj) {
+  return getWatchedMovies().some(movie => {
     return movie.id === movieObj.id;
   });
 }
 
+// function isInStorage(moviesArr) {
+//   return moviesArr.some(movie => {
+//     return movie.id === movieObj.id;
+//   });
+// }
+
 function addWatched(event) {
   const watchedMoviesArr = getWatchedMovies();
 
-  if (isInStorage(watchedMoviesArr)) {
-    console.log('InStorage');
-    return;
-  }
+  // if (isInStorage(watchedMoviesArr)) {
+  //   console.log('InStorage');
+  //   return;
+  // }
 
   watchedMoviesArr.push(movieObj);
   localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
@@ -50,10 +61,10 @@ function getWatchedMovies() {
 function addQueue(event) {
   const queueMoviesArr = getQueueMovies();
 
-  if (isInStorage(queueMoviesArr)) {
-    console.log('InStorage');
-    return;
-  }
+  // if (isInStorage(queueMoviesArr)) {
+  //   console.log('InStorage');
+  //   return;
+  // }
 
   queueMoviesArr.push(movieObj);
   localStorage.setItem('queueMovies', JSON.stringify(queueMoviesArr));
@@ -64,4 +75,4 @@ function getQueueMovies() {
   return res ? res : [];
 }
 
-export { setMovieObj, addWatched, addQueue };
+export { setMovieObj, addWatched, addQueue, getWatchedMovies, isInWatched };

@@ -44,7 +44,7 @@ refs.searchForm.addEventListener('submit', onInputSearch);
 
 async function onInputSearch(event) {
   if (event.type === 'submit') {
-    // apiService.searchQuery = refs.inputSearch.value;
+    // apiService.searchQuery = event.target.elements.inputText.value;
     event.preventDefault();
   }
   if (event.type === 'input') {

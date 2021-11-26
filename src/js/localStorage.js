@@ -24,10 +24,21 @@ function setMovieObj({
   //   console.log(movieObj);
 }
 
+function isInStorage(moviesArr) {
+  return moviesArr.some(movie => {
+    return movie.id === movieObj.id;
+  });
+}
+
 function addWatched(event) {
   const watchedMoviesArr = getWatchedMovies();
-  watchedMoviesArr.push(movieObj);
 
+  if (isInStorage(watchedMoviesArr)) {
+    console.log('InStorage');
+    return;
+  }
+
+  watchedMoviesArr.push(movieObj);
   localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
 }
 
@@ -38,8 +49,13 @@ function getWatchedMovies() {
 
 function addQueue(event) {
   const queueMoviesArr = getQueueMovies();
-  queueMoviesArr.push(movieObj);
 
+  if (isInStorage(queueMoviesArr)) {
+    console.log('InStorage');
+    return;
+  }
+
+  queueMoviesArr.push(movieObj);
   localStorage.setItem('queueMovies', JSON.stringify(queueMoviesArr));
 }
 

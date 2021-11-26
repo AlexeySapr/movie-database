@@ -1,6 +1,7 @@
 export const refs = {
   galleryList: document.querySelector('.film-list'),
   inputSearch: document.querySelector('.input'),
+  searchForm: document.querySelector('.search-form'),
   paginationContainer: document.getElementById('tui-pagination-container'),
 
   modal: document.querySelector('.modal-overlay'),

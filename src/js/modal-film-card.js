@@ -43,14 +43,10 @@ function closeModalCard() {
   refs.buttonClose.removeEventListener('click', closeModalCard);
   refs.modal.removeEventListener('click', toClickOnOverlay);
   window.removeEventListener('keydown', onEscKeyPress);
+  document.querySelector('.modal__watch-list').removeEventListener('click', addWatched);
+  document.querySelector('.modal__queue-list').removeEventListener('click', addQueue);
   document.body.classList.toggle('modal-open');
 }
-
-// function toClickButtonClose(evt) {
-//   if (evt) {
-//     closeModalCard();
-//   }
-// }
 
 function onEscKeyPress(evt) {
   if (evt.code === 'Escape') {
@@ -63,3 +59,9 @@ function toClickOnOverlay(evt) {
     closeModalCard();
   }
 }
+
+// function toClickButtonClose(evt) {
+//   if (evt) {
+//     closeModalCard();
+//   }
+// }

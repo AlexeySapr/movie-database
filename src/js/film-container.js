@@ -18,7 +18,7 @@ getData();
 async function getData() {
   try {
     const movies = await apiService.getMovies();
-    console.log(movies);
+    // console.log(movies);
     pagination.reset(movies.total_results);
 
     showMovies(movies.results);
@@ -43,10 +43,11 @@ refs.inputSearch.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELA
 refs.searchForm.addEventListener('submit', onInputSearch);
 
 async function onInputSearch(event) {
-  event.preventDefault();
   if (event.type === 'submit') {
-    apiService.searchQuery = refs.inputSearch.value;
-  } else {
+    // apiService.searchQuery = refs.inputSearch.value;
+    event.preventDefault();
+  }
+  if (event.type === 'input') {
     apiService.searchQuery = event.target.value.trim();
   }
 

@@ -1,0 +1,50 @@
+.modal-login {
+  @media screen and(max-width:767px) {
+    min-width: 400px;
+    min-height: 300px;
+    padding: 40px 20px;
+  }
+
+  @media screen and(min-width: 768px) and (max-width: 1023px) {
+    display: flex;
+    justify-content: center;
+    min-width: 400px;
+    min-height: 300px;
+  }
+  @media screen and(min-width:1024px) {
+    display: flex;
+    justify-content: center;
+    min-width: 400px;
+    min-height: 300px;
+  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+  padding: 40px 30px;
+
+  background-color: $whiteColor;
+}
+
+.close-button-login {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: $whiteColor;
+
+  &:hover {
+    cursor: pointer;
+    color: $accentColor;
+  }
+}
+
+.close-button__icon {
+  fill: currentColor;
+
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}

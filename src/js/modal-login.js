@@ -1,24 +1,44 @@
 import { refs } from './refs.js';
 
-const refsCloseModalLoginCard = refs.modalLoginCard.querySelector('.close-button-login');
+const refsCloseModalRegisterCard = refs.modalRegisterCard.querySelector('.register-close-button');
+const refsRegisterForm = refs.modalRegisterCard.querySelector('.register-modal-form');
 
-refs.modalLogin.addEventListener('click', onLogin);
+//отправка формы
+refsRegisterForm.addEventListener('submit', onFormRegisterSubmit);
 
-function onLogin(event) {
+function onFormRegisterSubmit(event) {
   event.preventDefault();
 
-  refs.modalLoginCard.classList.remove('is-hidden');
-
-  refsCloseModalLoginCard.addEventListener('click', toClickButtonClose);
+  const user = {
+    userName: event.target.name.value,
+    userTel: event.target.tel.value,
+    userEmail: event.target.mail.value,
+  };
+  console.log(user);
+  event.target.reset();
 }
 
+//открытие модального окна
+refs.modalRegister.addEventListener('click', onRegisterClick);
+
+function onRegisterClick(event) {
+  event.preventDefault();
+
+  refs.modalRegisterCard.classList.remove('is-hidden');
+  document.body.classList.toggle('modal-open');
+
+  refsCloseModalRegisterCard.addEventListener('click', toClickButtonClose);
+}
+
+//закрытие модального окна
 function toClickButtonClose(event) {
   closeModalCard();
 }
 
 function closeModalCard() {
-  refs.modalLoginCard.classList.add('is-hidden');
-  refsCloseModalLoginCard.removeEventListener('click', toClickButtonClose);
+  refs.modalRegisterCard.classList.add('is-hidden');
+  document.body.classList.toggle('modal-open');
+  refsCloseModalRegisterCard.removeEventListener('click', toClickButtonClose);
   //   refs.modal.removeEventListener('click', toClickOnOverlay);
   //   window.removeEventListener('keydown', onEscKeyPress);
   //   document.body.classList.toggle('modal-open');

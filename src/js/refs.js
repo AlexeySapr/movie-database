@@ -9,6 +9,6 @@ export const refs = {
   modalCard: document.querySelector('.modal-js'),
 
   /**************** */
-  modalLogin: document.querySelector('.link-register'),
-  modalLoginCard: document.querySelector('[data-modal-login]'),
+  modalRegister: document.querySelector('.link-register'),
+  modalRegisterCard: document.querySelector('[data-modal-register]'),
 };

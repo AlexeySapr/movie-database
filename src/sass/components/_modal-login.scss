@@ -1,4 +1,4 @@
-.modal-login {
+.modal-register {
   @media screen and(max-width:767px) {
     min-width: 400px;
     min-height: 300px;
@@ -27,7 +27,7 @@
   background-color: $whiteColor;
 }
 
-.close-button-login {
+.register-close-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -48,13 +48,13 @@
   transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.modal-form {
+.register-modal-form {
   display: flex;
   flex-direction: column;
   min-width: 365px;
 }
 
-.modal-form__title {
+.register-modal-form__title {
   font-weight: 700;
   font-size: 20px;
   line-height: 1.15;
@@ -68,7 +68,7 @@
   margin-bottom: 20px;
 }
 
-.login-modal-form__button {
+.register-modal-form__button {
   margin: 0 auto;
 
   color: #fff;

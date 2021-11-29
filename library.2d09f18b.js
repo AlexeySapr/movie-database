@@ -90,4 +90,4 @@ $(window).scroll(function(){$(this).scrollTop()>100?$(".upbutton").fadeIn():$(".
 },{}],"I9BA":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/pagination.js"),require("./js/modal-film-card.js"),require("./js/up-btn.js");
 },{"./sass/main.scss":"clu1","./js/pagination.js":"o8lo","./js/modal-film-card.js":"MzUv","./js/up-btn.js":"e4yY"}]},{},["I9BA"], null)
-//# sourceMappingURL=/film-library-team-project/library.ecadfc0a.js.map
+//# sourceMappingURL=/film-library-team-project/library.2d09f18b.js.map

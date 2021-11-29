@@ -1,10 +1,5 @@
 const movieObj = {};
 
-// const isMovieInStorage = {
-//   isWatched: false,
-//   isQueue: false,
-// };
-
 function setMovieObj({
   id,
   poster_path,
@@ -25,8 +20,6 @@ function setMovieObj({
   movieObj.original_title = original_title;
   movieObj.genres = genres;
   movieObj.overview = overview;
-
-  //   console.log(movieObj);
 }
 
 function getLocalStorageMovies(keyItem) {

@@ -39,7 +39,6 @@ async function getFilmInfo(filmId) {
       refWatchBtn.textContent = 'REMOVE FROM WATCHED';
     }
     refWatchBtn.addEventListener('click', addRemoveWatched);
-    // refWatchBtn.addEventListener('click', removeWatched);
 
     // if ('фильм в очереди') {
     //   ('закрасить кнопку');
@@ -59,8 +58,8 @@ function closeModalCard() {
   refs.modal.classList.add('is-hidden');
   refs.modal.removeEventListener('click', toClickOnOverlay);
   window.removeEventListener('keydown', onEscKeyPress);
-  document.querySelector('.modal__watch-list').removeEventListener('click', addWatched);
-  document.querySelector('.modal__queue-list').removeEventListener('click', addQueue);
+  document.querySelector('.modal__watch-list').removeEventListener('click', addRemoveWatched);
+  // document.querySelector('.modal__queue-list').removeEventListener('click', addQueue);
   document.body.classList.toggle('modal-open');
 }
 

@@ -29,34 +29,43 @@ function setMovieObj({
   //   console.log(movieObj);
 }
 
-function isInWatched(movieObj) {
-  return getWatchedMovies().some(movie => {
+function getLocalStorageMovies(keyItem) {
+  if (keyItem === 'watchedMovies') {
+    const res = JSON.parse(localStorage.getItem('watchedMovies'));
+    return res ? res : [];
+  } else if (keyItem === 'queueMovies') {
+    const res = JSON.parse(localStorage.getItem('queueMovies'));
+    return res ? res : [];
+  }
+}
+
+function isInStorage(movieObj, keyItem) {
+  return getLocalStorageMovies(keyItem).some(movie => {
     return movie.id === movieObj.id;
   });
 }
 
-// function isInStorage(moviesArr) {
-//   return moviesArr.some(movie => {
-//     return movie.id === movieObj.id;
-//   });
-// }ADD TO WATCHED
-
+/******************add remove***************** */
 function removeFromWatchedLocalStorage(movieObj) {
-  const newMoviesArr = getWatchedMovies().filter(movie => movie.id != movieObj.id);
+  const newMoviesArr = getLocalStorageMovies('watchedMovies').filter(
+    movie => movie.id != movieObj.id,
+  );
   localStorage.setItem('watchedMovies', JSON.stringify(newMoviesArr));
 }
 
 function addToWatchedLocalStorage(movieObj) {
-  const watchedMoviesArr = getWatchedMovies();
+  const watchedMoviesArr = getLocalStorageMovies('watchedMovies');
   watchedMoviesArr.push(movieObj);
   localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
 }
+/*********************************** */
 
+/******************listener********************* */
 function addRemoveWatched(event) {
   const refWatchBtn = document.querySelector('.modal__watch-list');
 
   //если фильм есть - удаляем
-  if (isInWatched(movieObj)) {
+  if (isInStorage(movieObj, 'watchedMovies')) {
     console.log('InStorage');
     refWatchBtn.classList.remove('inStorage');
     refWatchBtn.textContent = 'ADD TO WATCHED';
@@ -71,26 +80,21 @@ function addRemoveWatched(event) {
   addToWatchedLocalStorage(movieObj);
 }
 
-function getWatchedMovies() {
-  const res = JSON.parse(localStorage.getItem('watchedMovies'));
-  return res ? res : [];
-}
+// function addQueue(event) {
+//   const queueMoviesArr = getQueueMovies();
 
-function addQueue(event) {
-  const queueMoviesArr = getQueueMovies();
+//   // if (isInStorage(queueMoviesArr)) {
+//   //   console.log('InStorage');
+//   //   return;
+//   // }
 
-  // if (isInStorage(queueMoviesArr)) {
-  //   console.log('InStorage');
-  //   return;
-  // }
+//   queueMoviesArr.push(movieObj);
+//   localStorage.setItem('queueMovies', JSON.stringify(queueMoviesArr));
+// }
 
-  queueMoviesArr.push(movieObj);
-  localStorage.setItem('queueMovies', JSON.stringify(queueMoviesArr));
-}
+// function getQueueMovies() {
+//   const res = JSON.parse(localStorage.getItem('queueMovies'));
+//   return res ? res : [];
+// }
 
-function getQueueMovies() {
-  const res = JSON.parse(localStorage.getItem('queueMovies'));
-  return res ? res : [];
-}
-
-export { setMovieObj, addRemoveWatched, addQueue, getWatchedMovies, isInWatched };
+export { setMovieObj, addRemoveWatched, getLocalStorageMovies, isInStorage };

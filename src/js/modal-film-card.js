@@ -5,9 +5,8 @@ import modalCard from '../templates/modal-film-card-template.hbs';
 import {
   setMovieObj,
   addRemoveWatched,
-  addQueue,
-  getWatchedMovies,
-  isInWatched,
+  getLocalStorageMovies,
+  isInStorage,
 } from './localStorage.js';
 
 const apiService = new SearchAPI();
@@ -35,7 +34,7 @@ async function getFilmInfo(filmId) {
     const refWatchBtn = document.querySelector('.modal__watch-list');
     // const refQueueBtn = document.querySelector('.modal__queue-list');
 
-    if (isInWatched(filmInfo)) {
+    if (isInStorage(filmInfo, 'watchedMovies')) {
       refWatchBtn.classList.add('inStorage');
       refWatchBtn.textContent = 'REMOVE FROM WATCHED';
     }

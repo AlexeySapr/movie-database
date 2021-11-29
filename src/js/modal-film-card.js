@@ -39,12 +39,6 @@ async function getFilmInfo(filmId) {
       refWatchBtn.textContent = 'REMOVE FROM WATCHED';
     }
     refWatchBtn.addEventListener('click', addRemoveWatched);
-
-    // if ('фильм в очереди') {
-    //   ('закрасить кнопку');
-    // } else {
-    //  refQueueBtn.addEventListener('click', addQueue);
-    // }
   } catch (error) {
     console.error(error);
   }

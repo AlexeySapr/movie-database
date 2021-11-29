@@ -13,7 +13,7 @@ import { pagination } from './pagination.js';
 
 const apiService = new SearchAPI();
 
-// getData();
+getData();
 
 async function getData() {
   try {

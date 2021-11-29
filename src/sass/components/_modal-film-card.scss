@@ -178,12 +178,12 @@ body.modal-open {
     color: $blackColor;
   }
 
-  &__buttons-container {
-    display: flex;
-    @media screen and(max-width:767px) {
-      justify-content: center;
-    }
-  }
+  // &__buttons-container {
+  //   display: flex;
+  //   @media screen and(max-width:767px) {
+  //     justify-content: center;
+  //   }
+  // }
 
   &__queue-list,
   &__watch-list {
@@ -210,8 +210,8 @@ body.modal-open {
     cursor: pointer;
   }
 
-  &__queue-list.isInStorage,
-  &__watch-list.isInStorage {
+  &__queue-list.inStorage,
+  &__watch-list.inStorage {
     background-color: $additionalAccentColor;
     border: 1px solid $additionalAccentColor;
     color: $whiteColor;

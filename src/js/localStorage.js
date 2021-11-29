@@ -39,18 +39,36 @@ function isInWatched(movieObj) {
 //   return moviesArr.some(movie => {
 //     return movie.id === movieObj.id;
 //   });
-// }
+// }ADD TO WATCHED
 
-function addWatched(event) {
+function removeFromWatchedLocalStorage(movieObj) {
+  const newMoviesArr = getWatchedMovies().filter(movie => movie.id != movieObj.id);
+  localStorage.setItem('watchedMovies', JSON.stringify(newMoviesArr));
+}
+
+function addToWatchedLocalStorage(movieObj) {
   const watchedMoviesArr = getWatchedMovies();
-
-  // if (isInStorage(watchedMoviesArr)) {
-  //   console.log('InStorage');
-  //   return;
-  // }
-
   watchedMoviesArr.push(movieObj);
   localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
+}
+
+function addRemoveWatched(event) {
+  const refWatchBtn = document.querySelector('.modal__watch-list');
+
+  //если фильм есть - удаляем
+  if (isInWatched(movieObj)) {
+    console.log('InStorage');
+    refWatchBtn.classList.remove('inStorage');
+    refWatchBtn.textContent = 'ADD TO WATCHED';
+    removeFromWatchedLocalStorage(movieObj);
+    return;
+  }
+
+  //иначе добавляем в локал
+  console.log('need to add to storage');
+  refWatchBtn.classList.add('inStorage');
+  refWatchBtn.textContent = 'REMOVE FROM WATCHED';
+  addToWatchedLocalStorage(movieObj);
 }
 
 function getWatchedMovies() {
@@ -75,4 +93,4 @@ function getQueueMovies() {
   return res ? res : [];
 }
 
-export { setMovieObj, addWatched, addQueue, getWatchedMovies, isInWatched };
+export { setMovieObj, addRemoveWatched, addQueue, getWatchedMovies, isInWatched };

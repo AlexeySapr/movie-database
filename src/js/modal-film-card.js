@@ -4,7 +4,7 @@ import modalCard from '../templates/modal-film-card-template.hbs';
 
 import {
   setMovieObj,
-  addWatched,
+  addRemoveWatched,
   addQueue,
   getWatchedMovies,
   isInWatched,
@@ -14,7 +14,6 @@ const apiService = new SearchAPI();
 
 export function openModalCard(evt) {
   refs.modalCard.innerHTML = '';
-  // refs.buttonClose.addEventListener('click', toClickButtonClose);
   refs.modal.addEventListener('click', toClickOnOverlay);
   window.addEventListener('keydown', onEscKeyPress);
   document.body.classList.toggle('modal-open');
@@ -37,11 +36,11 @@ async function getFilmInfo(filmId) {
     // const refQueueBtn = document.querySelector('.modal__queue-list');
 
     if (isInWatched(filmInfo)) {
-      refWatchBtn.classList.add('isInStorage');
+      refWatchBtn.classList.add('inStorage');
       refWatchBtn.textContent = 'REMOVE FROM WATCHED';
     }
-
-    refWatchBtn.addEventListener('click', addWatched);
+    refWatchBtn.addEventListener('click', addRemoveWatched);
+    // refWatchBtn.addEventListener('click', removeWatched);
 
     // if ('фильм в очереди') {
     //   ('закрасить кнопку');
@@ -59,7 +58,6 @@ function cardMarkup(filmInfo) {
 
 function closeModalCard() {
   refs.modal.classList.add('is-hidden');
-  refs.buttonClose.removeEventListener('click', closeModalCard);
   refs.modal.removeEventListener('click', toClickOnOverlay);
   window.removeEventListener('keydown', onEscKeyPress);
   document.querySelector('.modal__watch-list').removeEventListener('click', addWatched);

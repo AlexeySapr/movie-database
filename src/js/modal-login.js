@@ -1,22 +1,22 @@
 import { refs } from './refs.js';
 
 const refsCloseModalRegisterCard = refs.modalRegisterCard.querySelector('.register-close-button');
-const refsRegisterForm = refs.modalRegisterCard.querySelector('.register-modal-form');
+// const refsRegisterForm = refs.modalRegisterCard.querySelector('.register-modal-form');
 
-//отправка формы
-refsRegisterForm.addEventListener('submit', onFormRegisterSubmit);
+// //отправка формы
+// refsRegisterForm.addEventListener('submit', onFormRegisterSubmit);
 
-function onFormRegisterSubmit(event) {
-  event.preventDefault();
+// function onFormRegisterSubmit(event) {
+//   event.preventDefault();
 
-  const user = {
-    userName: event.target.name.value,
-    userTel: event.target.tel.value,
-    userEmail: event.target.mail.value,
-  };
-  console.log(user);
-  event.target.reset();
-}
+//   const user = {
+//     userName: event.target.name.value,
+//     userTel: event.target.tel.value,
+//     userEmail: event.target.mail.value,
+//   };
+//   console.log(user);
+//   event.target.reset();
+// }
 
 //открытие модального окна
 refs.modalRegister.addEventListener('click', onRegisterClick);

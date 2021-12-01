@@ -1,22 +1,32 @@
 import { refs } from './refs.js';
+import AuthService from './auth.js';
+
+const authUser = new AuthService();
+
+// console.log(authUser);
 
 const refsCloseModalRegisterCard = refs.modalRegisterCard.querySelector('.register-close-button');
-// const refsRegisterForm = refs.modalRegisterCard.querySelector('.register-modal-form');
+const refsRegisterForm = refs.modalRegisterCard.querySelector('.register-modal-form');
 
-// //отправка формы
-// refsRegisterForm.addEventListener('submit', onFormRegisterSubmit);
+//отправка формы
+refsRegisterForm.addEventListener('submit', onFormRegisterSubmit);
 
-// function onFormRegisterSubmit(event) {
-//   event.preventDefault();
+function onFormRegisterSubmit(event) {
+  event.preventDefault();
 
-//   const user = {
-//     userName: event.target.name.value,
-//     userTel: event.target.tel.value,
-//     userEmail: event.target.mail.value,
-//   };
-//   console.log(user);
-//   event.target.reset();
-// }
+  const user = {
+    name: event.target.name.value,
+    phone: event.target.tel.value,
+    email: event.target.mail.value,
+    password: event.target.password.value,
+  };
+
+  console.log(authUser.register(user));
+  // if (authUser.register(user)) {
+  //   event.target.reset();
+  //   closeModalCard();
+  // }
+}
 
 //открытие модального окна
 refs.modalRegister.addEventListener('click', onRegisterClick);

@@ -1,26 +1,28 @@
 import debounce from 'lodash.debounce';
+import card from '../templates/film-card-template.hbs';
+import SearchAPI from './apiService.js';
+import { refs } from './refs.js';
+
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-import { refs } from './refs.js';
+import { pagination } from './pagination';
 
-import card from '../templates/film-card-template.hbs';
-
-import SearchAPI from './apiService.js';
 import { openModalCard } from './modal-film-card.js';
-
-import { pagination } from './pagination.js';
+import { scrollToTop } from './up-btn.js';
 
 const apiService = new SearchAPI();
 
-// getData();
+getData();
 
 async function getData() {
   try {
     const movies = await apiService.getMovies();
     // console.log(movies);
     pagination.reset(movies.total_results);
-
+    // pagination.getCurrentPage(apiService.page)
+    // console.log(movies);
+    // pagination.movePageTo(apiService.page);
     showMovies(movies.results);
   } catch (error) {
     console.error(error);
@@ -30,10 +32,9 @@ async function getData() {
 function showMovies(movies) {
   refs.galleryList.innerHTML = card(movies);
 
-  const listItems = refs.galleryList.querySelectorAll('li');
-
-  listItems.forEach(item => {
-    item.addEventListener('click', openModalCard);
+  const cards = document.querySelectorAll('.film-list__item');
+  cards.forEach(card => {
+    card.addEventListener('click', openModalCard);
   });
 }
 
@@ -44,7 +45,6 @@ refs.searchForm.addEventListener('submit', onInputSearch);
 
 async function onInputSearch(event) {
   if (event.type === 'submit') {
-    // apiService.searchQuery = event.target.elements.inputText.value;
     event.preventDefault();
   }
   if (event.type === 'input') {
@@ -63,7 +63,6 @@ async function onInputSearch(event) {
   try {
     Loading.standard();
     const movies = await apiService.getMovies();
-    // console.log(movies);
     pagination.reset(movies.total_results);
     Loading.remove();
 
@@ -79,11 +78,23 @@ async function onInputSearch(event) {
   }
 }
 
-/*******************пагинация******************************* */
+// Скролл на начало страницы
+
+//  function scrollToTop() {
+//   window.scrollTo({
+//     top: 0,
+//     belavior: 'smooth',
+//   });
+// }
+
+// Пагинация
+
 pagination.on('afterMove', showNewPage);
 
 async function showNewPage(event) {
   apiService.page = event.page;
   const movies = await apiService.getMovies();
+
   showMovies(movies.results);
+  scrollToTop();
 }

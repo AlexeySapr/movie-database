@@ -1,5 +1,5 @@
 import './sass/main.scss';
 
-import './js/pagination.js';
-import './js/modal-film-card.js';
+import './js/film-library.js';
 import './js/up-btn.js';
+import './js/modal-about-us.js';

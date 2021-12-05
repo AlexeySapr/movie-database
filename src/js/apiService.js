@@ -47,7 +47,6 @@ export default class SearchAPI {
     this.searchQuery = '';
   }
 
-  //работа со страницами
   get page() {
     return this.#page;
   }
@@ -56,7 +55,7 @@ export default class SearchAPI {
     this.#page = numOfPage;
   }
 
-  ressetPage() {
+    ressetPage() {
     this.#page = 1;
   }
 
@@ -108,9 +107,13 @@ export default class SearchAPI {
       const movieGenres = movie.genres.map(element => element.name).join(', ');
       movie.genres = movieGenres;
 
+      //форматируем постер фильма
       if (!movie.poster_path) {
         movie.own_poster_path = emtyFilmCard;
       }
+
+      //форматируем поле popularity
+      movie.popularity = Math.round(movie.popularity);
 
       //возвращаем фильм
       return movie;

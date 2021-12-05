@@ -174,7 +174,6 @@ export default class SearchAPI {
       if (trailers) {
         movie.trailers = trailers;
       }
-      // formatVideos(videos);
 
       //возвращаем фильм
       return movie;

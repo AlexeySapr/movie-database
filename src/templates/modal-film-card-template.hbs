@@ -43,7 +43,7 @@
       {{#if trailers}}
         <p class='modal__data-description modal__data-description--trailer'>
       {{#each trailers}}
-          <a href='https://www.youtube.com/watch?v={{key}}'>trailer {{index}}</a>
+          <a target="_blank" href='https://www.youtube.com/watch?v={{key}}'>trailer {{index}}</a>
       {{/each}}
         </p>
       {{else}}
@@ -51,6 +51,8 @@
       {{/if}}
     </div>
   </div>
+  
+
 
   <h2 class='modal__annotation-title'>About</h2>
 

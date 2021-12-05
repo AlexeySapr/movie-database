@@ -1,3 +1,4 @@
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import filmCard from '../templates/modal-film-card-template.hbs';
 import libCard from '../templates/library-film-card-template.hbs';
 import { refs } from './refs.js';
@@ -7,6 +8,7 @@ import { pagination } from './pagination.js';
 import {
   setMovieObj,
   addRemoveWatched,
+  addRemoveQueue,
   getLocalStorageMovies,
   isInStorage,
 } from './localStorage.js';
@@ -25,7 +27,9 @@ export function openModalCard(evt) {
   }
   const filmId = evt.currentTarget.dataset.idNumber;
 
+  Loading.standard();
   getFilmInfo(filmId);
+  Loading.remove();
 }
 
 async function getFilmInfo(filmId) {
@@ -36,13 +40,17 @@ async function getFilmInfo(filmId) {
     setMovieObj(filmInfo);
 
     const refWatchBtn = document.querySelector('.modal__watch-list');
-    // const refQueueBtn = document.querySelector('.modal__queue-list');
+    const refQueueBtn = document.querySelector('.modal__queue-list');
 
     if (isInStorage(filmInfo, 'watchedMovies')) {
       refWatchBtn.classList.add('inStorage');
       refWatchBtn.textContent = 'REMOVE WATCHED';
+    } else if (isInStorage(filmInfo, 'queueMovies')) {
+      refQueueBtn.classList.add('inStorage');
+      refQueueBtn.textContent = 'REMOVE QUEUE';
     }
     refWatchBtn.addEventListener('click', addRemoveWatched);
+    refQueueBtn.addEventListener('click', addRemoveQueue);
   } catch (error) {
     console.error(error);
   }
@@ -73,6 +81,7 @@ function closeModalCard() {
     }
   }
   document.querySelector('.modal__watch-list').removeEventListener('click', addRemoveWatched);
+  document.querySelector('.modal__queue-list').removeEventListener('click', addRemoveQueue);
 }
 
 function showLibraryPage(moviesArr, page) {

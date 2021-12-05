@@ -1,7 +1,7 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
+// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+// import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-import { refs } from './refs.js';
+// import { refs } from './refs.js';
 
 const movieObj = {};
 
@@ -44,38 +44,53 @@ function isInStorage(movieObj, keyItem) {
 }
 
 /******************add remove***************** */
-function removeFromWatchedLocalStorage(movieObj) {
-  const newMoviesArr = getLocalStorageMovies('watchedMovies').filter(
-    movie => movie.id != movieObj.id,
-  );
-  localStorage.setItem('watchedMovies', JSON.stringify(newMoviesArr));
+function removeFromLocalStorage(movieObj, key) {
+  const newMoviesArr = getLocalStorageMovies(key).filter(movie => movie.id != movieObj.id);
+  localStorage.setItem(key, JSON.stringify(newMoviesArr));
 }
 
-function addToWatchedLocalStorage(movieObj) {
-  const watchedMoviesArr = getLocalStorageMovies('watchedMovies');
+function addToLocalStorage(movieObj, key) {
+  const watchedMoviesArr = getLocalStorageMovies(key);
   watchedMoviesArr.push(movieObj);
-  localStorage.setItem('watchedMovies', JSON.stringify(watchedMoviesArr));
+  localStorage.setItem(key, JSON.stringify(watchedMoviesArr));
 }
 /*********************************** */
 
 /******************listener********************* */
 function addRemoveWatched(event) {
   const refWatchBtn = document.querySelector('.modal__watch-list');
+  const key = 'watchedMovies';
 
   //если фильм есть - удаляем
-  if (isInStorage(movieObj, 'watchedMovies')) {
-    console.log('InStorage');
+  if (isInStorage(movieObj, key)) {
     refWatchBtn.classList.remove('inStorage');
     refWatchBtn.textContent = 'ADD TO WATCHED';
-    removeFromWatchedLocalStorage(movieObj);
+    removeFromLocalStorage(movieObj, key);
     return;
   }
 
   //иначе добавляем в локал
-  console.log('need to add to storage');
   refWatchBtn.classList.add('inStorage');
   refWatchBtn.textContent = 'REMOVE WATCHED';
-  addToWatchedLocalStorage(movieObj);
+  addToLocalStorage(movieObj, key);
 }
 
-export { setMovieObj, addRemoveWatched, getLocalStorageMovies, isInStorage };
+function addRemoveQueue(event) {
+  const refQueueBtn = document.querySelector('.modal__queue-list');
+  const key = 'queueMovies';
+
+  //если фильм есть - удаляем
+  if (isInStorage(movieObj, key)) {
+    refQueueBtn.classList.remove('inStorage');
+    refQueueBtn.textContent = 'ADD TO QUEUE';
+    removeFromLocalStorage(movieObj, key);
+    return;
+  }
+
+  //иначе добавляем в локал
+  refQueueBtn.classList.add('inStorage');
+  refQueueBtn.textContent = 'REMOVE QUEUE';
+  addToLocalStorage(movieObj, key);
+}
+
+export { setMovieObj, addRemoveWatched, addRemoveQueue, getLocalStorageMovies, isInStorage };

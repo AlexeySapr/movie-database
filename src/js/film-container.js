@@ -1,13 +1,11 @@
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { pagination } from './pagination';
+
 import card from '../templates/film-card-template.hbs';
 import SearchAPI from './apiService.js';
 import { refs } from './refs.js';
-
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-
-import { pagination } from './pagination';
-
 import { openModalCard } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
@@ -78,17 +76,7 @@ async function onInputSearch(event) {
   }
 }
 
-// Скролл на начало страницы
-
-//  function scrollToTop() {
-//   window.scrollTo({
-//     top: 0,
-//     belavior: 'smooth',
-//   });
-// }
-
 // Пагинация
-
 pagination.on('afterMove', showNewPage);
 
 async function showNewPage(event) {

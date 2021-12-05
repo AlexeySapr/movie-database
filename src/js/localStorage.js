@@ -1,8 +1,3 @@
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import { Loading } from 'notiflix/build/notiflix-loading-aio';
-
-// import { refs } from './refs.js';
-
 const movieObj = {};
 
 function setMovieObj({

@@ -1,7 +1,7 @@
-import { refs } from './refs';
-
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+
+import { refs } from './refs.js';
 
 const movieObj = {};
 
@@ -74,7 +74,7 @@ function addRemoveWatched(event) {
   //иначе добавляем в локал
   console.log('need to add to storage');
   refWatchBtn.classList.add('inStorage');
-  refWatchBtn.textContent = 'REMOVE FROM WATCHED';
+  refWatchBtn.textContent = 'REMOVE WATCHED';
   addToWatchedLocalStorage(movieObj);
 }
 

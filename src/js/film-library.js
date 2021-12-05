@@ -1,12 +1,13 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+
 import libCard from '../templates/library-film-card-template.hbs';
 import { refs } from '../js/refs.js';
 import { openModalCard } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-
-import { pagination } from './pagination';
+import { pagination } from './pagination.js';
+import { getLocalStorageMovies } from './localStorage.js';
 
 window.addEventListener('load', onWatchedBtnClick);
 refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
@@ -24,7 +25,7 @@ function onWatchedBtnClick() {
   currentPage.watched = true;
   currentPage.queue = false;
 
-  if (!localStorage.getItem('WATCHED')) {
+  if (!getLocalStorageMovies('watchedMovies').length) {
     Notify.failure('Your watched list is empty. Add any movie.');
     pagination.reset(0);
     refs.galleryList.innerHTML = '';
@@ -32,51 +33,51 @@ function onWatchedBtnClick() {
   }
 
   Loading.standard();
-  const moviesArr = getLocalStorageDataByKey(`WATCHED`);
+  const moviesArr = getLocalStorageMovies('watchedMovies');
   pagination.reset(moviesArr.length);
   moviesArr.splice(20);
   showMoviesCards(moviesArr);
   Loading.remove();
 }
 
-function onQueueBtnClick() {
-  refs.queueBtn.classList.add('filter__btn--current');
-  refs.watchedBtn.classList.remove('filter__btn--current');
+// function onQueueBtnClick() {
+//   refs.queueBtn.classList.add('filter__btn--current');
+//   refs.watchedBtn.classList.remove('filter__btn--current');
 
-  currentPage.watched = false;
-  currentPage.queue = true;
+//   currentPage.watched = false;
+//   currentPage.queue = true;
 
-  if (!localStorage.getItem('QUEUE')) {
-    Notify.failure('Your queue list is empty. Add any movie.');
-    pagination.reset(0);
-    refs.galleryList.innerHTML = '';
-    return;
-  }
+//   if (!localStorage.getItem('QUEUE')) {
+//     Notify.failure('Your queue list is empty. Add any movie.');
+//     pagination.reset(0);
+//     refs.galleryList.innerHTML = '';
+//     return;
+//   }
 
-  Loading.standard();
-  const moviesArr = getLocalStorageDataByKey(`QUEUE`);
-  pagination.reset(moviesArr.length);
-  moviesArr.splice(20);
-  showMoviesCards(moviesArr);
-  Loading.remove();
-}
+//   Loading.standard();
+//   const moviesArr = getLocalStorageDataByKey(`QUEUE`);
+//   pagination.reset(moviesArr.length);
+//   moviesArr.splice(20);
+//   showMoviesCards(moviesArr);
+//   Loading.remove();
+// }
 
-function getLocalStorageDataByKey(key) {
-  const data = localStorage.getItem(key);
-  const parsedData = JSON.parse(data);
-  const moviesArr = parsedData[key.toLowerCase()];
+// function getLocalStorageDataByKey(key) {
+//   const data = localStorage.getItem(key);
+//   const parsedData = JSON.parse(data);
+//   const moviesArr = parsedData[key.toLowerCase()];
 
-  moviesArr.forEach(movie => {
-    const genresArr = movie.genres.split(', ');
-    if (genresArr.length > 2) {
-      genresArr.splice(2, genresArr.length, 'Other');
-    }
-    movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
-    movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
-  });
+//   moviesArr.forEach(movie => {
+//     const genresArr = movie.genres.split(', ');
+//     if (genresArr.length > 2) {
+//       genresArr.splice(2, genresArr.length, 'Other');
+//     }
+//     movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
+//     movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
+//   });
 
-  return moviesArr;
-}
+//   return moviesArr;
+// }
 
 function showMoviesCards(movies) {
   refs.galleryList.innerHTML = libCard(movies);

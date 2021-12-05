@@ -1,29 +1,30 @@
 import filmCard from '../templates/modal-film-card-template.hbs';
 import libCard from '../templates/library-film-card-template.hbs';
 import { refs } from './refs.js';
-import SearchAPI from './apiService';
+import SearchAPI from './apiService.js';
 import { pagination } from './pagination.js';
 
-import { addWatched, addQueue, searchItemQueue, searchItemWatched } from './localStorage.js';
+import {
+  setMovieObj,
+  addRemoveWatched,
+  getLocalStorageMovies,
+  isInStorage,
+} from './localStorage.js';
 
 const apiService = new SearchAPI();
 
-const modal = document.querySelector('.modal-overlay');
-const buttonClose = document.querySelector('.modal-close-js');
-const modalCard = document.querySelector('.modal-js');
-
 export function openModalCard(evt) {
-  modalCard.innerHTML = '';
-  buttonClose.addEventListener('click', toClickButtonClose);
+  refs.modalCard.innerHTML = '';
+  refs.modal.addEventListener('click', toClickOnOverlay);
+  refs.buttonClose.addEventListener('click', toClickButtonClose);
   window.addEventListener('keydown', onEscKeyPress);
-  modal.addEventListener('click', toClickOnOverlay);
   document.body.classList.toggle('modal-open');
-  //   console.log('open');
+
   if (evt) {
-    modal.classList.remove('is-hidden');
+    refs.modal.classList.remove('is-hidden');
   }
   const filmId = evt.currentTarget.dataset.idNumber;
-  // console.log(filmId);
+
   getFilmInfo(filmId);
 }
 
@@ -31,44 +32,46 @@ async function getFilmInfo(filmId) {
   try {
     const filmInfo = await apiService.getMovieById(filmId);
     cardMarkup(filmInfo);
-    const buttonWatched = document.querySelector('.modal__watch-list');
-    const buttonQueue = document.querySelector('.modal__queue-list');
+    setMovieObj(filmInfo);
 
-    searchItemQueue(filmInfo);
-    buttonQueue.addEventListener('click', add => addQueue(filmInfo));
-    searchItemWatched(filmInfo);
-    buttonWatched.addEventListener('click', add => addWatched(filmInfo));
+    const refWatchBtn = document.querySelector('.modal__watch-list');
+    // const refQueueBtn = document.querySelector('.modal__queue-list');
+
+    if (isInStorage(filmInfo, 'watchedMovies')) {
+      refWatchBtn.classList.add('inStorage');
+      refWatchBtn.textContent = 'REMOVE WATCHED';
+    }
+    refWatchBtn.addEventListener('click', addRemoveWatched);
   } catch (error) {
     console.error(error);
   }
 }
 
 function cardMarkup(filmInfo) {
-  modalCard.insertAdjacentHTML('beforeend', filmCard(filmInfo));
+  refs.modalCard.innerHTML = filmCard(filmInfo);
 }
 
 function closeModalCard() {
-  //   console.log('close');
-  modal.classList.add('is-hidden');
+  refs.modal.classList.add('is-hidden');
+  refs.modal.removeEventListener('click', toClickOnOverlay);
+  refs.buttonClose.removeEventListener('click', closeModalCard);
 
-  buttonClose.removeEventListener('click', closeModalCard);
-  modal.removeEventListener('click', toClickOnOverlay);
   window.removeEventListener('keydown', onEscKeyPress);
   document.body.classList.toggle('modal-open');
 
-  if (window.location.pathname === '/film-library-team-project/library.html') {
+  if (window.location.pathname === '/library.html') {
     const isInWatched = refs.watchedBtn.classList.contains('filter__btn--current');
     if (isInWatched) {
-      const moviesArr = getLocalStorageMovies('WATCHED');
-      // console.log(moviesArr);
+      const moviesArr = getLocalStorageMovies('watchedMovies');
       const page = pagination.getCurrentPage();
       showLibraryPage(moviesArr, page);
     } else {
-      const moviesArr = getLocalStorageMovies('QUEUE');
-      const page = pagination.getCurrentPage();
-      showLibraryPage(moviesArr, page);
+      // const moviesArr = getLocalStorageMovies('queueMovies');
+      // const page = pagination.getCurrentPage();
+      // showLibraryPage(moviesArr, page);
     }
   }
+  document.querySelector('.modal__watch-list').removeEventListener('click', addRemoveWatched);
 }
 
 function showLibraryPage(moviesArr, page) {
@@ -83,35 +86,35 @@ function showLibraryPage(moviesArr, page) {
   }
 }
 
-function getLocalStorageMovies(keyItem) {
-  if (keyItem === 'WATCHED') {
-    const res = JSON.parse(localStorage.getItem('WATCHED'));
+// function getLocalStorageMovies(keyItem) {
+//   if (keyItem === 'WATCHED') {
+//     const res = JSON.parse(localStorage.getItem('WATCHED'));
 
-    res.watched.forEach(movie => {
-      const genresArr = movie.genres.split(', ');
-      if (genresArr.length > 2) {
-        genresArr.splice(2, genresArr.length, 'Other');
-      }
-      movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
-      movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
-    });
+//     res.watched.forEach(movie => {
+//       const genresArr = movie.genres.split(', ');
+//       if (genresArr.length > 2) {
+//         genresArr.splice(2, genresArr.length, 'Other');
+//       }
+//       movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
+//       movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
+//     });
 
-    return res ? res.watched : [];
-  } else if (keyItem === 'QUEUE') {
-    const res = JSON.parse(localStorage.getItem('QUEUE'));
+//     return res ? res.watched : [];
+//   } else if (keyItem === 'QUEUE') {
+//     const res = JSON.parse(localStorage.getItem('QUEUE'));
 
-    res.queue.forEach(movie => {
-      const genresArr = movie.genres.split(', ');
-      if (genresArr.length > 2) {
-        genresArr.splice(2, genresArr.length, 'Other');
-      }
-      movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
-      movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
-    });
+//     res.queue.forEach(movie => {
+//       const genresArr = movie.genres.split(', ');
+//       if (genresArr.length > 2) {
+//         genresArr.splice(2, genresArr.length, 'Other');
+//       }
+//       movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
+//       movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
+//     });
 
-    return res ? res.queue : [];
-  }
-}
+//     return res ? res.queue : [];
+//   }
+// }
 
 function toClickButtonClose(evt) {
   if (evt) {

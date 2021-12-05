@@ -187,11 +187,18 @@
 
   color: $blackColor;
 
-  &--title {
-    text-transform: uppercase;
+  &--count {
+    padding: 1px 5px;
+
+    font-size: 12px;
+    line-height: 1.166;
+
+    border-radius: 5px;
+
+    background-color: $backgroundGrayColor;
   }
 
-  & &--average {
+  &--average {
     padding: 1px 10px;
 
     font-size: 12px;
@@ -203,15 +210,17 @@
     background-color: $additionalAccentColor;
   }
 
-  & &--count {
-    padding: 1px 5px;
+  &--title {
+    text-transform: uppercase;
+  }
 
-    font-size: 12px;
-    line-height: 1.166;
+  &--trailer {
+    text-transform: uppercase;
+    color: $additionalAccentColor;
+  }
 
-    border-radius: 5px;
-
-    background-color: $backgroundGrayColor;
+  &--trailer a:first-child {
+    margin-right: 10px;
   }
 }
 

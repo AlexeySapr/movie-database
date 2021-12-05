@@ -31,6 +31,7 @@ export function openModalCard(evt) {
 async function getFilmInfo(filmId) {
   try {
     const filmInfo = await apiService.getMovieById(filmId);
+    console.log(filmInfo);
     cardMarkup(filmInfo);
     setMovieObj(filmInfo);
 

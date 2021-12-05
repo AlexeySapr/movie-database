@@ -38,6 +38,32 @@ function formatVote(voteNumber) {
   return voteNumber.toFixed(1);
 }
 
+// форматирует ответ для трейлеров
+function formatVideos(videosArr) {
+  const trailers = [];
+  let i = 1;
+  videosArr.forEach(video => {
+    if (video.type === 'Trailer') {
+      const index = i++;
+      const key = video.key;
+      // console.log(video);
+      trailers.push({ index, key });
+    }
+  });
+
+  // console.log(trailers);
+  if (trailers.length === 0) {
+    return null;
+  } else if (trailers.length === 1) {
+    delete trailers[0].index;
+    return trailers;
+  } else {
+    return trailers.slice(0, 2);
+  }
+
+  // return trailers.length > 2 ? trailers.slice(0, 2) : trailers;
+}
+
 //экспорт функций запросов
 export default class SearchAPI {
   #baseUrl = 'https://api.themoviedb.org/3';
@@ -55,7 +81,7 @@ export default class SearchAPI {
     this.#page = numOfPage;
   }
 
-    ressetPage() {
+  ressetPage() {
     this.#page = 1;
   }
 
@@ -97,11 +123,39 @@ export default class SearchAPI {
     }
   }
 
+  // //запрос на видео по фильму
+  // async getVideosAboutMovie(movieId) {
+  //   try {
+  //     const response = await axios.get(`${this.#baseUrl}/movie/${movieId}/videos`);
+  //     const videos = await response.data.results;
+  //     return videos;
+  //     // console.log(videos);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
   //запрос на фильм по по ID
   async getMovieById(movieId) {
+    const numOfFetch = [1, 2];
+
+    const arrayOfPromises = numOfFetch.map(async value => {
+      if (value === 1) {
+        const response = await axios.get(`${this.#baseUrl}/movie/${movieId}`);
+        return response.data;
+      } else {
+        const response = await axios.get(`${this.#baseUrl}/movie/${movieId}/videos`);
+        return response.data.results;
+      }
+    });
+
     try {
-      const response = await axios.get(`${this.#baseUrl}/movie/${movieId}`);
-      const movie = await response.data;
+      const movieArr = await Promise.all(arrayOfPromises);
+      // const response = await axios.get(`${this.#baseUrl}/movie/${movieId}`);
+      const movie = movieArr[0];
+
+      // const responseVideos = await axios.get(`${this.#baseUrl}/movie/${movieId}/videos`);
+      const videos = movieArr[1];
 
       //форматируем поле с жанрами фильма
       const movieGenres = movie.genres.map(element => element.name).join(', ');
@@ -114,6 +168,13 @@ export default class SearchAPI {
 
       //форматируем поле popularity
       movie.popularity = Math.round(movie.popularity);
+
+      //форматируем трейлеры
+      const trailers = formatVideos(videos);
+      if (trailers) {
+        movie.trailers = trailers;
+      }
+      // formatVideos(videos);
 
       //возвращаем фильм
       return movie;

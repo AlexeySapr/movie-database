@@ -27,7 +27,7 @@
     </div>
     <div class='modal__table-element'>
       <p class='modal__data-title'>Popularity</p>
-      <p class='modal__data-description popularity-js'>{{popularity}}</p>
+      <p class='modal__data-description'>{{popularity}}</p>
     </div>
 
     <div class='modal__table-element'>
@@ -36,7 +36,19 @@
     </div>
     <div class='modal__table-element'>
       <p class='modal__data-title'>Genre</p>
-      <p class='modal__data-description modal__data-description--genre genre-js'>{{genres}}</p>
+      <p class='modal__data-description'>{{genres}}</p>
+    </div>
+    <div class='modal__table-element'>
+      <p class='modal__data-title'>Trailer</p>
+      {{#if trailers}}
+        <p class='modal__data-description modal__data-description--trailer'>
+      {{#each trailers}}
+          <a href='https://www.youtube.com/watch?v={{key}}'>trailer {{index}}</a>
+      {{/each}}
+        </p>
+      {{else}}
+         <p class='modal__data-description modal__data-description--trailer'>No trailer</p>
+      {{/if}}
     </div>
   </div>
 

@@ -13,7 +13,7 @@ import { scrollToTop } from './up-btn.js';
 
 const apiService = new SearchAPI();
 
-getData();
+// getData();
 
 async function getData() {
   try {

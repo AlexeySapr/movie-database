@@ -9,14 +9,14 @@ import { scrollToTop } from './up-btn.js';
 import { pagination } from './pagination.js';
 import { getLocalStorageMovies } from './localStorage.js';
 
-window.addEventListener('load', onWatchedBtnClick);
-refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
-refs.queueBtn.addEventListener('click', onQueueBtnClick);
-
 const currentPage = {
   watched: true,
   queue: false,
 };
+
+window.addEventListener('load', onWatchedBtnClick);
+refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
+refs.queueBtn.addEventListener('click', onQueueBtnClick);
 
 function onWatchedBtnClick() {
   refs.watchedBtn.classList.add('filter__btn--current');
@@ -28,6 +28,7 @@ function onWatchedBtnClick() {
   if (!getLocalStorageMovies('watchedMovies').length) {
     Notify.failure('Your watched list is empty. Add any movie.');
     pagination.reset(0);
+    refs.filmContainer.innerHTML;
     refs.galleryList.innerHTML = '';
     return;
   }

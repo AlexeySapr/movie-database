@@ -36,7 +36,7 @@ async function getFilmInfo(filmId) {
   try {
     const filmInfo = await apiService.getMovieById(filmId);
     // console.log(filmInfo);
-    cardMarkup(filmInfo);
+    refs.modalCard.innerHTML = filmCard(filmInfo);
     setMovieObj(filmInfo);
 
     const refWatchBtn = document.querySelector('.modal__watch-list');
@@ -55,10 +55,6 @@ async function getFilmInfo(filmId) {
   } catch (error) {
     console.error(error);
   }
-}
-
-function cardMarkup(filmInfo) {
-  refs.modalCard.innerHTML = filmCard(filmInfo);
 }
 
 function closeModalCard() {

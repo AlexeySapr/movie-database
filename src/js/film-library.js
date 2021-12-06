@@ -1,9 +1,8 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-import libCard from '../templates/library-film-card-template.hbs';
 import { refs } from '../js/refs.js';
-import { openModalCard } from './modal-film-card.js';
+import { showMoviesCards } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
 import { pagination } from './pagination.js';
@@ -16,7 +15,7 @@ const currentPage = {
 
 window.addEventListener('load', onWatchedBtnClick);
 refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
-refs.queueBtn.addEventListener('click', onQueueBtnClick);
+// refs.queueBtn.addEventListener('click', onQueueBtnClick);
 
 function onWatchedBtnClick() {
   refs.watchedBtn.classList.add('filter__btn--current');
@@ -27,16 +26,19 @@ function onWatchedBtnClick() {
 
   if (!getLocalStorageMovies('watchedMovies').length) {
     Notify.failure('Your watched list is empty. Add any movie.');
+    refs.emptyLibrary.classList.remove('hidden');
     pagination.reset(0);
-    refs.filmContainer.innerHTML;
     refs.galleryList.innerHTML = '';
     return;
   }
 
   Loading.standard();
   const moviesArr = getLocalStorageMovies('watchedMovies');
+
+  // console.log(moviesArr);
   pagination.reset(moviesArr.length);
   moviesArr.splice(20);
+  refs.emptyLibrary.classList.add('hidden');
   showMoviesCards(moviesArr);
   Loading.remove();
 }
@@ -79,15 +81,6 @@ function onWatchedBtnClick() {
 
 //   return moviesArr;
 // }
-
-function showMoviesCards(movies) {
-  refs.galleryList.innerHTML = libCard(movies);
-
-  const cards = document.querySelectorAll('.film-list__item');
-  cards.forEach(card => {
-    card.addEventListener('click', openModalCard);
-  });
-}
 
 pagination.on('afterMove', showNewPage);
 

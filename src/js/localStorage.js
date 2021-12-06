@@ -1,3 +1,5 @@
+import emtyFilmCard from '../images/emty-film.jpg';
+
 const movieObj = {};
 
 function setMovieObj({
@@ -9,6 +11,7 @@ function setMovieObj({
   popularity,
   original_title,
   genres,
+  release_date,
   overview,
 }) {
   movieObj.id = id;
@@ -19,7 +22,9 @@ function setMovieObj({
   movieObj.popularity = popularity;
   movieObj.original_title = original_title;
   movieObj.genres = genres;
+  movieObj.release_date = release_date;
   movieObj.overview = overview;
+  movieObj.own_poster_path = emtyFilmCard;
 }
 
 function getLocalStorageMovies(keyItem) {

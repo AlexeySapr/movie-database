@@ -1,0 +1,23 @@
+.empty-library {
+  text-align: center;
+}
+
+.empty-library.hidden {
+  display: none;
+}
+
+.empty-library__title {
+  font-size: 1.4em;
+
+  @include for-size(tablet) {
+    font-size: 1.6em;
+  }
+
+  @include for-size(desktop) {
+    font-size: 1.8em;
+  }
+}
+
+.empty-library__poster {
+  margin: 0 auto;
+}

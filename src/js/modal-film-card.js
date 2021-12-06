@@ -15,7 +15,7 @@ import {
 
 const apiService = new SearchAPI();
 
-export function openModalCard(evt) {
+function openModalCard(evt) {
   refs.modalCard.innerHTML = '';
   refs.modal.addEventListener('click', toClickOnOverlay);
   refs.buttonClose.addEventListener('click', toClickButtonClose);
@@ -35,7 +35,7 @@ export function openModalCard(evt) {
 async function getFilmInfo(filmId) {
   try {
     const filmInfo = await apiService.getMovieById(filmId);
-    console.log(filmInfo);
+    // console.log(filmInfo);
     cardMarkup(filmInfo);
     setMovieObj(filmInfo);
 
@@ -96,6 +96,32 @@ function showLibraryPage(moviesArr, page) {
   }
 }
 
+function showMoviesCards(movies) {
+  //форматируем жанры
+  movies.forEach(movie => {
+    const genresArr = movie.genres.split(', ');
+    if (genresArr.length > 2) {
+      genresArr.splice(2, genresArr.length, 'Other');
+    }
+
+    movie.genres = genresArr.join(', ');
+  });
+
+  //рендерим карточки фильмов
+  refs.galleryList.innerHTML = libCard(movies);
+
+  //вешаем слушатели на каждую карточку
+  const cards = document.querySelectorAll('.film-list__item');
+  cards.forEach(card => {
+    card.addEventListener('click', openModalCard);
+  });
+
+  //если нет ни одного фильма, покзываем заглушку
+  if (movies.length === 0) {
+    refs.emptyLibrary.classList.remove('hidden');
+  }
+}
+
 // function getLocalStorageMovies(keyItem) {
 //   if (keyItem === 'WATCHED') {
 //     const res = JSON.parse(localStorage.getItem('WATCHED'));
@@ -144,11 +170,4 @@ function onEscKeyPress(evt) {
   }
 }
 
-function showMoviesCards(movies) {
-  refs.galleryList.innerHTML = libCard(movies);
-
-  const cards = document.querySelectorAll('.film-list__item');
-  cards.forEach(card => {
-    card.addEventListener('click', openModalCard);
-  });
-}
+export { openModalCard, showMoviesCards };

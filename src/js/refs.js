@@ -1,5 +1,5 @@
 export const refs = {
-  filmContainer: document.querySelector('.container'),
+  emptyLibrary: document.querySelector('.empty-library'),
   galleryList: document.querySelector('.film-list'),
   inputSearch: document.querySelector('.input'),
   searchForm: document.querySelector('.search-form'),

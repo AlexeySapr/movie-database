@@ -123,18 +123,6 @@ export default class SearchAPI {
     }
   }
 
-  // //запрос на видео по фильму
-  // async getVideosAboutMovie(movieId) {
-  //   try {
-  //     const response = await axios.get(`${this.#baseUrl}/movie/${movieId}/videos`);
-  //     const videos = await response.data.results;
-  //     return videos;
-  //     // console.log(videos);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
   //запрос на фильм по по ID
   async getMovieById(movieId) {
     const numOfFetch = [1, 2];
@@ -168,6 +156,9 @@ export default class SearchAPI {
 
       //форматируем поле popularity
       movie.popularity = Math.round(movie.popularity);
+
+      //форматируем поле даты
+      movie.release_date = formatYear(movie.release_date);
 
       //форматируем трейлеры
       const trailers = formatVideos(videos);

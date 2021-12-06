@@ -15,7 +15,7 @@ const currentPage = {
 
 window.addEventListener('load', onWatchedBtnClick);
 refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
-// refs.queueBtn.addEventListener('click', onQueueBtnClick);
+refs.queueBtn.addEventListener('click', onQueueBtnClick);
 
 function onWatchedBtnClick() {
   refs.watchedBtn.classList.add('filter__btn--current');
@@ -42,44 +42,31 @@ function onWatchedBtnClick() {
   Loading.remove();
 }
 
-// function onQueueBtnClick() {
-//   refs.queueBtn.classList.add('filter__btn--current');
-//   refs.watchedBtn.classList.remove('filter__btn--current');
+function onQueueBtnClick() {
+  refs.queueBtn.classList.add('filter__btn--current');
+  refs.watchedBtn.classList.remove('filter__btn--current');
 
-//   currentPage.watched = false;
-//   currentPage.queue = true;
+  currentPage.watched = false;
+  currentPage.queue = true;
 
-//   if (!localStorage.getItem('QUEUE')) {
-//     Notify.failure('Your queue list is empty. Add any movie.');
-//     pagination.reset(0);
-//     refs.galleryList.innerHTML = '';
-//     return;
-//   }
+  Loading.standard();
+  const moviesArr = getLocalStorageMovies('queueMovies');
 
-//   Loading.standard();
-//   const moviesArr = getLocalStorageDataByKey(`QUEUE`);
-//   pagination.reset(moviesArr.length);
-//   moviesArr.splice(20);
-//   showMoviesCards(moviesArr);
-//   Loading.remove();
-// }
+  if (!moviesArr.length) {
+    Notify.failure('Your queue list is empty. Add any movie.');
+    refs.galleryList.innerHTML = '';
+    refs.emptyLibrary.classList.remove('hidden');
+    pagination.reset(0);
+    Loading.remove();
+    return;
+  }
 
-// function getLocalStorageDataByKey(key) {
-//   const data = localStorage.getItem(key);
-//   const parsedData = JSON.parse(data);
-//   const moviesArr = parsedData[key.toLowerCase()];
-
-//   moviesArr.forEach(movie => {
-//     const genresArr = movie.genres.split(', ');
-//     if (genresArr.length > 2) {
-//       genresArr.splice(2, genresArr.length, 'Other');
-//     }
-//     movie.genre_ids = movie.genres ? genresArr.join(', ') : 'undefined';
-//     movie.release_date = movie.release_date ? movie.release_date.slice(0, 4) : 'undefined';
-//   });
-
-//   return moviesArr;
-// }
+  pagination.reset(moviesArr.length);
+  moviesArr.splice(20);
+  refs.emptyLibrary.classList.add('hidden');
+  showMoviesCards(moviesArr);
+  Loading.remove();
+}
 
 pagination.on('afterMove', showNewPage);
 

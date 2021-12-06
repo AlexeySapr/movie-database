@@ -24,18 +24,17 @@ function onWatchedBtnClick() {
   currentPage.watched = true;
   currentPage.queue = false;
 
-  if (!getLocalStorageMovies('watchedMovies').length) {
-    Notify.failure('Your watched list is empty. Add any movie.');
-    refs.emptyLibrary.classList.remove('hidden');
-    pagination.reset(0);
-    refs.galleryList.innerHTML = '';
-    return;
-  }
-
   Loading.standard();
   const moviesArr = getLocalStorageMovies('watchedMovies');
 
-  // console.log(moviesArr);
+  if (!moviesArr.length) {
+    Notify.failure('Your watched list is empty. Add any movie.');
+    refs.emptyLibrary.classList.remove('hidden');
+    pagination.reset(0);
+    Loading.remove();
+    return;
+  }
+
   pagination.reset(moviesArr.length);
   moviesArr.splice(20);
   refs.emptyLibrary.classList.add('hidden');
@@ -88,9 +87,9 @@ function showNewPage(event) {
   let moviesArr;
 
   if (currentPage.watched) {
-    moviesArr = getLocalStorageDataByKey(`WATCHED`);
+    moviesArr = getLocalStorageMovies(`watchedMovies`);
   } else if (currentPage.queue) {
-    moviesArr = getLocalStorageDataByKey(`QUEUE`);
+    moviesArr = getLocalStorageMovies(`queueMovies`);
   }
 
   const page = event.page;

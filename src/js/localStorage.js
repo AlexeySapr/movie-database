@@ -15,7 +15,7 @@ function setMovieObj({
   overview,
 }) {
   movieObj.id = id;
-  movieObj.poster_path = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  movieObj.poster_path = poster_path;
   movieObj.title = title;
   movieObj.vote_average = vote_average;
   movieObj.vote_count = vote_count;

@@ -24,22 +24,10 @@ function onWatchedBtnClick() {
   currentPage.watched = true;
   currentPage.queue = false;
 
-  Loading.standard();
-  const moviesArr = getLocalStorageMovies('watchedMovies');
+  const storageKey = 'watchedMovies';
+  const message = 'Your watched list is empty. Add any movie.';
 
-  if (!moviesArr.length) {
-    Notify.failure('Your watched list is empty. Add any movie.');
-    refs.emptyLibrary.classList.remove('hidden');
-    pagination.reset(0);
-    Loading.remove();
-    return;
-  }
-
-  pagination.reset(moviesArr.length);
-  moviesArr.splice(20);
-  refs.emptyLibrary.classList.add('hidden');
-  showMoviesCards(moviesArr);
-  Loading.remove();
+  renderGallery(storageKey, message);
 }
 
 function onQueueBtnClick() {
@@ -49,11 +37,18 @@ function onQueueBtnClick() {
   currentPage.watched = false;
   currentPage.queue = true;
 
+  const storageKey = 'queueMovies';
+  const message = 'Your queue list is empty. Add any movie.';
+
+  renderGallery(storageKey, message);
+}
+
+function renderGallery(storageKey, message) {
   Loading.standard();
-  const moviesArr = getLocalStorageMovies('queueMovies');
+  const moviesArr = getLocalStorageMovies(storageKey);
 
   if (!moviesArr.length) {
-    Notify.failure('Your queue list is empty. Add any movie.');
+    Notify.failure(message);
     refs.galleryList.innerHTML = '';
     refs.emptyLibrary.classList.remove('hidden');
     pagination.reset(0);
@@ -68,6 +63,7 @@ function onQueueBtnClick() {
   Loading.remove();
 }
 
+//пагинация
 pagination.on('afterMove', showNewPage);
 
 function showNewPage(event) {

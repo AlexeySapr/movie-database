@@ -63,7 +63,7 @@ function renderGallery(storageKey, message) {
   Loading.remove();
 }
 
-//пагинация
+//функция пагинации
 pagination.on('afterMove', showNewPage);
 
 function showNewPage(event) {

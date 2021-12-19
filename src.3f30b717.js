@@ -109,4 +109,4 @@ module.exports="/movie-database/emty-film.915bfcc5.jpg";
 },{}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/film-container.js"),require("./js/modal-about-us.js");
 },{"./sass/main.scss":"clu1","./js/film-container.js":"qcBh","./js/modal-about-us.js":"U5J9"}]},{},["Focm"], null)
-//# sourceMappingURL=/movie-database/src.86d66260.js.map
+//# sourceMappingURL=/movie-database/src.3f30b717.js.map

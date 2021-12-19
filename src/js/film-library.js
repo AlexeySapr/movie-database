@@ -1,11 +1,11 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import { pagination } from './pagination.js';
 
 import { refs } from '../js/refs.js';
 import { showMoviesCards } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
-import { pagination } from './pagination.js';
 import { getLocalStorageMovies } from './localStorage.js';
 
 const currentPage = {
@@ -13,10 +13,12 @@ const currentPage = {
   queue: false,
 };
 
+//Вешаем слушатели на кнопки при загрузке страницы библиотеки
 window.addEventListener('load', onWatchedBtnClick);
 refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
 refs.queueBtn.addEventListener('click', onQueueBtnClick);
 
+//Колбек при нажатии на кнопку "Watched"
 function onWatchedBtnClick() {
   refs.watchedBtn.classList.add('filter__btn--current');
   refs.queueBtn.classList.remove('filter__btn--current');
@@ -30,6 +32,7 @@ function onWatchedBtnClick() {
   renderGallery(storageKey, message);
 }
 
+//Колбек при нажатии на кнопку "Queue"
 function onQueueBtnClick() {
   refs.queueBtn.classList.add('filter__btn--current');
   refs.watchedBtn.classList.remove('filter__btn--current');
@@ -43,6 +46,7 @@ function onQueueBtnClick() {
   renderGallery(storageKey, message);
 }
 
+//Функция рендера галереи
 function renderGallery(storageKey, message) {
   Loading.standard();
   const moviesArr = getLocalStorageMovies(storageKey);

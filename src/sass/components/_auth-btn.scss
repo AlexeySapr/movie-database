@@ -27,21 +27,26 @@
   text-transform: uppercase;
 }
 
-// .sign-btn::after {
-//   display: block;
-//   content: '';
-//   position: absolute;
-//   width: 0%;
-//   background: #ff6b08;
-//   height: 3px;
-// }
+.sign-btn::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 0%;
+  background: #ff6b08;
+  height: 3px;
+  top: 17px;
 
-// .sign-btn:hover ::after {
-//   width: 85%;
-// }
+  transition: width 250ms ease-in;
+}
+
+.sign-btn:hover:after {
+  width: 85%;
+}
 
 .sign-btn span {
   margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .sign-btn svg {

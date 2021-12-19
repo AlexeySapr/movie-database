@@ -1,0 +1,50 @@
+.auth-btn__container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  @include for-size(tablet) {
+    right: 75px;
+  }
+
+  @include for-size(desktop) {
+    right: 70px;
+  }
+}
+
+.sign-btn {
+  display: flex;
+  background-color: transparent;
+  padding: 2px 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+// .sign-btn::after {
+//   display: block;
+//   content: '';
+//   position: absolute;
+//   width: 0%;
+//   background: #ff6b08;
+//   height: 3px;
+// }
+
+// .sign-btn:hover ::after {
+//   width: 85%;
+// }
+
+.sign-btn span {
+  margin-right: 5px;
+}
+
+.sign-btn svg {
+  fill: currentColor;
+  width: 12px;
+}

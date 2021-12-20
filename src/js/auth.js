@@ -4,15 +4,28 @@ import { refs } from './refs.js';
 //   libraryLink: document.querySelector('.library-link'),
 // };
 
+let isAuthModalOpen = false;
+
 refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
 
-function onAuthBtnClick(event) {
-  console.log('click on auth');
+//открытие модального окна
+function onAuthBtnClick() {
   refs.modalAuthCard.classList.remove('is-hidden');
   document.body.classList.toggle('modal-open');
+  isAuthModalOpen = true;
+  refs.closeModalAuthCard.addEventListener('click', onCloseBtn);
 }
 
+//закрытие модального окна
+function onCloseBtn() {
+  refs.modalAuthCard.classList.add('is-hidden');
+  document.body.classList.toggle('modal-open');
+  isAuthModalOpen = false;
+  refs.closeModalAuthCard.removeEventListener('click', onCloseBtn);
+}
+
+/****************************************** */
 const flag = true;
 
 function onLibaryClick(event) {
@@ -24,15 +37,3 @@ function onLibaryClick(event) {
 
   console.log('move to lib');
 }
-
-//открытие модального окна
-// refs.modalRegister.addEventListener('click', onRegisterClick);
-
-// function onRegisterClick(event) {
-//   event.preventDefault();
-
-//   refs.modalRegisterCard.classList.remove('is-hidden');
-//   document.body.classList.toggle('modal-open');
-
-//   refsCloseModalRegisterCard.addEventListener('click', toClickButtonClose);
-// }

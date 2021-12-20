@@ -14,4 +14,5 @@ export const refs = {
   authBtn: document.querySelector('.sign-btn'),
   libraryLink: document.querySelector('.library-link'),
   modalAuthCard: document.querySelector('[data-modal-auth]'),
+  closeModalAuthCard: document.querySelector('[data-auth-close]'),
 };

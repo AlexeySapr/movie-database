@@ -13,6 +13,13 @@ export const refs = {
 
   authBtn: document.querySelector('.sign-btn'),
   libraryLink: document.querySelector('.library-link'),
+
   modalAuthCard: document.querySelector('[data-modal-auth]'),
   closeModalAuthCard: document.querySelector('[data-auth-close]'),
+
+  regLink: document.getElementById('reg-link'),
+  signLink: document.getElementById('sign-link'),
+
+  regFields: document.querySelector('.register-modal-form'),
+  signFields: document.querySelector('.sign-modal-form'),
 };

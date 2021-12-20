@@ -13,16 +13,35 @@ refs.authBtn.addEventListener('click', onAuthBtnClick);
 function onAuthBtnClick() {
   refs.modalAuthCard.classList.remove('is-hidden');
   document.body.classList.toggle('modal-open');
-  isAuthModalOpen = true;
+
   refs.closeModalAuthCard.addEventListener('click', onCloseBtn);
+  refs.regLink.addEventListener('click', onRegBtnClick);
+  refs.signLink.addEventListener('click', onSingBtnClick);
 }
 
 //закрытие модального окна
 function onCloseBtn() {
   refs.modalAuthCard.classList.add('is-hidden');
   document.body.classList.toggle('modal-open');
-  isAuthModalOpen = false;
+
   refs.closeModalAuthCard.removeEventListener('click', onCloseBtn);
+  refs.regLink.removeEventListener('click', onRegBtnClick);
+  refs.signLink.removeEventListener('click', onSingBtnClick);
+}
+
+//при нажатии на кнопку регистрации
+function onRegBtnClick(event) {
+  changeForm(event);
+}
+
+function onSingBtnClick(event) {
+  changeForm(event);
+}
+
+function changeForm(event) {
+  event.preventDefault();
+  refs.regFields.classList.toggle('is-hidden');
+  refs.signFields.classList.toggle('is-hidden');
 }
 
 /****************************************** */

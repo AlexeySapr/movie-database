@@ -6,20 +6,10 @@
 			</svg>
 		</button>
 
-		<form class="register-modal-form">
+		<!-- форма авторизации -->
+		<form class="sign-modal-form">
 			<p class="register-modal-form__title">Sign In</p>
 			<ul class="form modal-form__list">
-				<div class="reg-fields is-hidden">
-					<li class="form__item">
-						<label class="form__label" for="name">Name</label>
-						<input class="form__input" type="text" name="name" id="name">
-					</li>
-					<li class="form__item">
-						<label class="form__label" for="tel">Phone</label>
-						<input class="form__input" type="tel" name="tel" id="tel">
-					</li>
-				</div>
-
 				<li class="form__item">
 					<label class="form__label" for="mail">Email</label>
 					<input class="form__input" type="email" name="mail" id="mail">
@@ -29,7 +19,35 @@
 					<input class="form__input" type="password" name="password" id="password">
 				</li>
 				<li class="form__item">
-					<p class="registered">Not registered? <a class="registered-login" href="#">Register</a></p>
+					<p class="registered">Not registered? <a id="reg-link" href="#">Register</a></p>
+				</li>
+
+			</ul>
+			<button type="submit" class="button register-modal-form__button">Sign In</button>
+		</form>
+
+		<!-- форма регистации -->
+		<form class="register-modal-form is-hidden">
+			<p class="register-modal-form__title">Registration</p>
+			<ul class="form modal-form__list">
+				<li class="form__item">
+					<label class="form__label" for="name">Name</label>
+					<input class="form__input" type="text" name="name" id="name">
+				</li>
+				<li class="form__item">
+					<label class="form__label" for="tel">Phone</label>
+					<input class="form__input" type="tel" name="tel" id="tel">
+				</li>
+				<li class="form__item">
+					<label class="form__label" for="mail">Email</label>
+					<input class="form__input" type="email" name="mail" id="mail">
+				</li>
+				<li class="form__item">
+					<label class="form__label" for="password">Password</label>
+					<input class="form__input" type="password" name="password" id="password">
+				</li>
+				<li class="form__item">
+					<p class="registered">Already registered? <a id="sign-link" href="#">Sign In</a></p>
 				</li>
 
 			</ul>

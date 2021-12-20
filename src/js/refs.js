@@ -10,4 +10,8 @@ export const refs = {
   modal: document.querySelector('.modal-overlay'),
   buttonClose: document.querySelector('.modal-close-js'),
   modalCard: document.querySelector('.modal-js'),
+
+  authBtn: document.querySelector('.sign-btn'),
+  libraryLink: document.querySelector('.library-link'),
+  modalAuthCard: document.querySelector('[data-modal-auth]'),
 };

@@ -4,8 +4,6 @@ import { refs } from './refs.js';
 //   libraryLink: document.querySelector('.library-link'),
 // };
 
-let isAuthModalOpen = false;
-
 refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
 
@@ -53,11 +51,22 @@ function changeForm(event) {
 }
 /************************* */
 
+//при сабмите формы
 function onSubmit(event) {
   event.preventDefault();
-  console.log(event.target.className === 'sign-modal-form');
-  console.log(event.target.elements.mail.value);
-  //   console.log();
+
+  const { name, mail, password } = event.target.elements;
+  const { className } = event.target;
+
+  const user = {
+    userName: className === 'register-modal-form' ? name.value : null,
+    userEmail: mail.value,
+    userPass: password.value,
+  };
+
+  console.log(user);
+  //отправляем юзера
+  //закрываем модалку
 }
 
 /****************************************** */

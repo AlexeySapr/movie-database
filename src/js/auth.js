@@ -14,9 +14,14 @@ function onAuthBtnClick() {
   refs.modalAuthCard.classList.remove('is-hidden');
   document.body.classList.toggle('modal-open');
 
+  //слушатели
   refs.closeModalAuthCard.addEventListener('click', onCloseBtn);
   refs.regLink.addEventListener('click', onRegBtnClick);
   refs.signLink.addEventListener('click', onSingBtnClick);
+
+  //на сабмит
+  refs.regFields.addEventListener('submit', onSubmit);
+  refs.signFields.addEventListener('submit', onSubmit);
 }
 
 //закрытие модального окна
@@ -27,9 +32,12 @@ function onCloseBtn() {
   refs.closeModalAuthCard.removeEventListener('click', onCloseBtn);
   refs.regLink.removeEventListener('click', onRegBtnClick);
   refs.signLink.removeEventListener('click', onSingBtnClick);
+
+  refs.regFields.removeEventListener('submit', onRegBtnClick);
+  refs.signFields.removeEventListener('submit', onSingBtnClick);
 }
 
-//при нажатии на кнопку регистрации
+/*******смена формы***** */
 function onRegBtnClick(event) {
   changeForm(event);
 }
@@ -42,6 +50,14 @@ function changeForm(event) {
   event.preventDefault();
   refs.regFields.classList.toggle('is-hidden');
   refs.signFields.classList.toggle('is-hidden');
+}
+/************************* */
+
+function onSubmit(event) {
+  event.preventDefault();
+  console.log(event.target.className === 'sign-modal-form');
+  console.log(event.target.elements.mail.value);
+  //   console.log();
 }
 
 /****************************************** */

@@ -1,8 +1,8 @@
 import { refs } from './refs.js';
-// const localRefs = {
-//   authBtn: document.querySelector('.sign-btn'),
-//   libraryLink: document.querySelector('.library-link'),
-// };
+import AuthService from './firebase/firebaseService.js';
+import { async } from '@firebase/util';
+
+const authService = new AuthService();
 
 refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
@@ -59,14 +59,25 @@ function onSubmit(event) {
   const { className } = event.target;
 
   const user = {
-    userName: className === 'register-modal-form' ? name.value : null,
-    userEmail: mail.value,
-    userPass: password.value,
+    name: className === 'register-modal-form' ? name.value : null,
+    email: mail.value,
+    password: password.value,
   };
 
   console.log(user);
+  regUser(user);
+
   //отправляем юзера
   //закрываем модалку
+}
+
+async function regUser(user) {
+  try {
+    const regUser = await authService.register(user);
+    console.log(regUser);
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 /****************************************** */

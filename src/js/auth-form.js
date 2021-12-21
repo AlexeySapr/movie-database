@@ -18,8 +18,8 @@ function onAuthBtnClick() {
   refs.signLink.addEventListener('click', onSingBtnClick);
 
   //на сабмит
-  refs.regFields.addEventListener('submit', onSubmit);
-  refs.signFields.addEventListener('submit', onSubmit);
+  refs.regFields.addEventListener('submit', onRegSubmit);
+  refs.signFields.addEventListener('submit', onSignSubmit);
 }
 
 //закрытие модального окна
@@ -31,8 +31,8 @@ function onCloseBtn() {
   refs.regLink.removeEventListener('click', onRegBtnClick);
   refs.signLink.removeEventListener('click', onSingBtnClick);
 
-  refs.regFields.removeEventListener('submit', onRegBtnClick);
-  refs.signFields.removeEventListener('submit', onSingBtnClick);
+  refs.regFields.removeEventListener('submit', onRegSubmit);
+  refs.signFields.removeEventListener('submit', onSignSubmit);
 }
 
 /*******смена формы***** */
@@ -51,36 +51,50 @@ function changeForm(event) {
 }
 /************************* */
 
-//при сабмите формы
-function onSubmit(event) {
+//при сабмите регистр формы
+function onRegSubmit(event) {
   event.preventDefault();
-
   const { name, mail, password } = event.target.elements;
-  const { className } = event.target;
 
   const user = {
-    name: className === 'register-modal-form' ? name.value : null,
+    name: name.value,
     email: mail.value,
     password: password.value,
   };
 
-  console.log(user);
-  regUser(user);
+  // regUser(user);
+  refs.regFields.reset();
+  onCloseBtn();
 
   //отправляем юзера
   //закрываем модалку
 }
 
-async function regUser(user) {
+//при сабмите авторизац формы
+function onSignSubmit(event) {
+  event.preventDefault();
+  const { mail, password } = event.target.elements;
+
+  const user = {
+    email: mail.value,
+    password: password.value,
+  };
+
+  //отправляем юзера
+  //закрываем модалку
+}
+
+/****************************************** */
+async function regUser(newUser) {
+  authService.user = newUser;
   try {
-    const regUser = await authService.register(user);
+    const regUser = await authService.register();
     console.log(regUser);
   } catch (error) {
     console.log(error.message);
   }
 }
 
-/****************************************** */
 const flag = true;
 
 function onLibaryClick(event) {

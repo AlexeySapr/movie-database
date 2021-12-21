@@ -9,7 +9,7 @@ function onAuthBtnClick() {
   refs.modalAuthCard.classList.remove('is-hidden');
   document.body.classList.toggle('modal-open');
 
-  //слушатели
+  //слушатели на закрытие модалки и смену формы
   refs.closeModalAuthCard.addEventListener('click', onCloseBtn);
   refs.regLink.addEventListener('click', onRegBtnClick);
   refs.signLink.addEventListener('click', onSingBtnClick);
@@ -77,7 +77,7 @@ function onSignSubmit(event) {
 
 /****************************************** */
 
-const flag = true;
+const flag = false;
 
 function onLibaryClick(event) {
   if (flag) {

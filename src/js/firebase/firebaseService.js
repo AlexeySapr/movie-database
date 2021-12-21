@@ -24,24 +24,14 @@ export default class AuthService {
   // register(email, password);
   async register() {
     const { name, email, password } = this.authUser;
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const updateUser = await updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: this.#baseUserIcon,
-      });
-      console.log(userCredential.user);
-      console.log('auth.currentUser: ', auth.currentUser);
 
-      //   return userCredential.user;
-      //   const userID = userCredential.user.uid;
-      //   console.log(userID);
-    } catch (error) {
-      //   const errorCode = error.code;
-      const errorMessage = error.message;
-      //   console.log('errorCode: ', errorCode);
-      console.log('errorMessage: ', errorMessage);
-    }
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: this.#baseUserIcon,
+    });
+
+    return userCredential.user.uid;
   }
 
   // signIn(email, password);

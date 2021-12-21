@@ -1,8 +1,5 @@
-import { refs } from './refs.js';
-import AuthService from './firebase/firebaseService.js';
-import { async } from '@firebase/util';
-
-const authService = new AuthService();
+import { refs } from '../refs.js';
+import { regUser } from './authService.js';
 
 refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
@@ -23,7 +20,7 @@ function onAuthBtnClick() {
 }
 
 //закрытие модального окна
-function onCloseBtn() {
+export function onCloseBtn() {
   refs.modalAuthCard.classList.add('is-hidden');
   document.body.classList.toggle('modal-open');
 
@@ -62,12 +59,7 @@ function onRegSubmit(event) {
     password: password.value,
   };
 
-  // regUser(user);
-  refs.regFields.reset();
-  onCloseBtn();
-
-  //отправляем юзера
-  //закрываем модалку
+  regUser(user);
 }
 
 //при сабмите авторизац формы
@@ -85,15 +77,6 @@ function onSignSubmit(event) {
 }
 
 /****************************************** */
-async function regUser(newUser) {
-  authService.user = newUser;
-  try {
-    const regUser = await authService.register();
-    console.log(regUser);
-  } catch (error) {
-    console.log(error.message);
-  }
-}
 
 const flag = true;
 

@@ -35,8 +35,9 @@ export default class AuthService {
   }
 
   // signIn(email, password);
-  async signIn({ email, password }) {
+  async signIn() {
+    const { email, password } = this.authUser;
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log(userCredential);
+    return userCredential.user.uid;
   }
 }

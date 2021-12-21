@@ -1,5 +1,5 @@
 import { refs } from '../refs.js';
-import { regUser } from './authService.js';
+import { registerUser, signInUser } from './authService.js';
 
 refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
@@ -59,7 +59,7 @@ function onRegSubmit(event) {
     password: password.value,
   };
 
-  regUser(user);
+  registerUser(user);
 }
 
 //при сабмите авторизац формы
@@ -72,8 +72,7 @@ function onSignSubmit(event) {
     password: password.value,
   };
 
-  //отправляем юзера
-  //закрываем модалку
+  signInUser(user);
 }
 
 /****************************************** */

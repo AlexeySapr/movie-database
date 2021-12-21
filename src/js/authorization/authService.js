@@ -4,10 +4,11 @@ import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { refs } from '../refs.js';
 import { onCloseBtn } from './auth-form.js';
 import AuthService from '../firebase/firebaseService.js';
+import { async } from '@firebase/util';
 
 const authService = new AuthService();
 
-async function regUser(newUser) {
+async function registerUser(newUser) {
   Loading.standard();
   authService.user = newUser;
   try {
@@ -20,8 +21,25 @@ async function regUser(newUser) {
   } catch (error) {
     Loading.remove();
     Notify.failure(error.code);
-    console.log(error.code);
+    console.log(error.message);
   }
 }
 
-export { regUser };
+async function signInUser(signUser) {
+  Loading.standard();
+  authService.user = signUser;
+  try {
+    const userId = await authService.signIn();
+    if (userId) {
+      refs.signFields.reset();
+      onCloseBtn();
+    }
+    Loading.remove();
+  } catch (error) {
+    Loading.remove();
+    Notify.failure(error.code);
+    console.log(error.message);
+  }
+}
+
+export { registerUser, signInUser };

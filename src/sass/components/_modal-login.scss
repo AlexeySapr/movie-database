@@ -1,5 +1,11 @@
 .modal-register {
-  @media screen and(max-width:767px) {
+  @media screen and(max-width:565px) {
+    min-width: 300px;
+    min-height: 300px;
+    padding: 40px 20px;
+  }
+
+  @media screen and(min-width: 566px) and(max-width:767px) {
     min-width: 400px;
     min-height: 300px;
     padding: 40px 20px;
@@ -52,7 +58,10 @@
 .sign-modal-form {
   display: flex;
   flex-direction: column;
-  min-width: 365px;
+
+  @include for-size(tablet) {
+    min-width: 365px;
+  }
 }
 
 .register-modal-form__title {

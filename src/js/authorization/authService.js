@@ -42,4 +42,9 @@ async function signInUser(signUser) {
   }
 }
 
+// setTimeout(() => {
+//   const name = authService.signInUserName;
+//   console.log(name);
+// }, 3000);
+
 export { registerUser, signInUser };

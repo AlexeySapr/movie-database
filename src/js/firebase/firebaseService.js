@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from './firebaseData.js';
 import userIcon from '../../images/icons/user_icon.png';
@@ -11,6 +12,7 @@ export default class AuthService {
 
   constructor() {
     this.authUser = {};
+    this.signInUserName = '';
   }
 
   get user() {
@@ -40,4 +42,17 @@ export default class AuthService {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user.uid;
   }
+
+  //is user sign in
+  //   isSign() {
+  //     onAuthStateChanged(auth, user => {
+  //       if (user) {
+  //         this.signInUserName = user.displayName;
+  //         console.log(this.signInUserName);
+  //         // return user.displayName;
+  //       } else {
+  //         console.log('User is signed out');
+  //       }
+  //     });
+  //   }
 }

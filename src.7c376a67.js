@@ -138,4 +138,4 @@ module.exports="/movie-database/user_icon.5bc0e514.png";
 },{"../refs.js":"VyiV","./authService.js":"VBUz"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/film-container.js"),require("./js/modal-about-us.js"),require("./js/authorization/auth-form.js");
 },{"./sass/main.scss":"clu1","./js/film-container.js":"qcBh","./js/modal-about-us.js":"U5J9","./js/authorization/auth-form.js":"uA8w"}]},{},["Focm"], null)
-//# sourceMappingURL=/movie-database/src.0223bfa9.js.map
+//# sourceMappingURL=/movie-database/src.7c376a67.js.map

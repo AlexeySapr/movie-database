@@ -1,5 +1,5 @@
 import { refs } from '../refs.js';
-import { registerUser, signInUser } from './authService.js';
+import { registerUser, signInUser, signOutUser } from './authService.js';
 
 refs.authBtn.addEventListener('click', onAuthBtnClick);
 

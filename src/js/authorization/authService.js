@@ -42,9 +42,22 @@ async function signInUser(signUser) {
   }
 }
 
+async function signOutUser() {
+  Loading.standard();
+  authService.user = {};
+  try {
+    await authService.signUserOut();
+    Loading.remove();
+  } catch (error) {
+    Loading.remove();
+    Notify.failure(error.code);
+    console.log(error.message);
+  }
+}
+
 // setTimeout(() => {
 //   const name = authService.signInUserName;
 //   console.log(name);
 // }, 3000);
 
-export { registerUser, signInUser };
+export { registerUser, signInUser, signOutUser };

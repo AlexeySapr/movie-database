@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from './firebaseData.js';
@@ -41,6 +42,11 @@ export default class AuthService {
     const { email, password } = this.authUser;
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user.uid;
+  }
+
+  //sign out user
+  async signUserOut() {
+    return await signOut(auth);
   }
 
   //is user sign in

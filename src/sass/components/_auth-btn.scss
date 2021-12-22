@@ -27,6 +27,21 @@
   text-transform: uppercase;
 }
 
+.sign-btn:before {
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #fff;
+  margin-right: 5px;
+}
+
+.signIn:before {
+  content: '\f090';
+}
+
+.signOut:before {
+  content: '\f08b';
+}
+
 .sign-btn::after {
   display: block;
   content: '';
@@ -52,4 +67,9 @@
 .sign-btn svg {
   fill: currentColor;
   width: 12px;
+}
+
+.signIn.is-hidden,
+.signOut.is-hidden {
+  display: none;
 }

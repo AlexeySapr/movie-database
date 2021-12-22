@@ -1,7 +1,6 @@
 import { refs } from '../refs.js';
 import { registerUser, signInUser } from './authService.js';
 
-refs.libraryLink.addEventListener('click', onLibaryClick);
 refs.authBtn.addEventListener('click', onAuthBtnClick);
 
 //открытие модального окна
@@ -34,14 +33,14 @@ export function onCloseBtn() {
 
 /*******смена формы***** */
 function onRegBtnClick(event) {
-  changeForm(event);
+  toggleForm(event);
 }
 
 function onSingBtnClick(event) {
-  changeForm(event);
+  toggleForm(event);
 }
 
-function changeForm(event) {
+function toggleForm(event) {
   event.preventDefault();
   refs.regFields.classList.toggle('is-hidden');
   refs.signFields.classList.toggle('is-hidden');
@@ -73,18 +72,4 @@ function onSignSubmit(event) {
   };
 
   signInUser(user);
-}
-
-/****************************************** */
-
-const flag = false;
-
-function onLibaryClick(event) {
-  if (flag) {
-    event.preventDefault();
-    console.log('click on lib');
-    return;
-  }
-
-  console.log('move to lib');
 }

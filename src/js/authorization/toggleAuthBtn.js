@@ -23,33 +23,33 @@ function onLibaryClick(event) {
 onAuthStateChanged(auth, user => {
   const authBtnRefs = refs.authBtn.querySelector('button');
   if (user) {
-    if (authBtnRefs) {
-      refs.authBtn.querySelector('button').removeEventListener('click', onAuthInClick);
+    if (authBtnRefs.classList.contains('signIn')) {
+      authBtnRefs.classList.remove('signIn');
+      authBtnRefs.removeEventListener('click', onAuthInClick);
     }
 
-    refs.authBtn.innerHTML = `
-	  	<button class="sign-btn signOut">
-          <span>Sign out</span>
-        </button>`;
-    refs.authBtn.querySelector('button').addEventListener('click', onAuthOutClick);
+    authBtnRefs.classList.add('signOut');
+    authBtnRefs.innerHTML = `<span>Sign out</span>`;
+    authBtnRefs.addEventListener('click', onAuthOutClick);
+
+    addUsernameToLocalStorage(user.displayName);
   } else {
-    if (authBtnRefs) {
-      refs.authBtn.querySelector('button').removeEventListener('click', onAuthOutClick);
+    if (authBtnRefs.classList.contains('signOut')) {
+      authBtnRefs.classList.remove('signOut');
+      authBtnRefs.removeEventListener('click', onAuthOutClick);
     }
 
-    refs.authBtn.innerHTML = `
-		<button class="sign-btn signIn ">
-          <span>Sign in</span>
-        </button>`;
-    refs.authBtn.querySelector('button').addEventListener('click', onAuthInClick);
+    authBtnRefs.classList.add('signIn');
+    authBtnRefs.innerHTML = `<span>Sign in</span>`;
+    authBtnRefs.addEventListener('click', onAuthInClick);
+    removeUsernameFromLocalStorage();
   }
 });
 
-// onAuthStateChanged(auth, user => {
-//   if (user) {
-//     console.log(user.displayName);
-//     return user;
-//   } else {
-//     console.log('User is signed out');
-//   }
-// });
+function addUsernameToLocalStorage(userName) {
+  localStorage.setItem('userName', JSON.stringify(userName));
+}
+
+function removeUsernameFromLocalStorage() {
+  localStorage.setItem('userName', JSON.stringify(''));
+}

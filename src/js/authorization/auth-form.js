@@ -1,15 +1,15 @@
 import { refs } from '../refs.js';
 import { registerUser, signInUser, signOutUser } from './authService.js';
 
-refs.authInBtn.addEventListener('click', onAuthBtnClick);
-refs.authOutBtn.addEventListener('click', onAuthOutClick);
+// refs.authInBtn.addEventListener('click', onAuthInClick);
+// refs.authOutBtn.addEventListener('click', onAuthOutClick);
 
 function onAuthOutClick() {
   signOutUser();
 }
 
 //открытие модального окна
-function onAuthBtnClick() {
+function onAuthInClick() {
   refs.modalAuthCard.classList.remove('is-hidden');
   document.body.classList.toggle('modal-open');
 
@@ -78,3 +78,5 @@ function onSignSubmit(event) {
 
   signInUser(user);
 }
+
+export { onAuthInClick, onAuthOutClick };

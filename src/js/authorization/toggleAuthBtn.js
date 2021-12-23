@@ -1,31 +1,47 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebaseData.js';
-import { signOutUser } from './authService.js';
-
 import { refs } from '../refs.js';
+import { onAuthInClick, onAuthOutClick } from './auth-form.js';
+import { signOutUser } from './authService.js';
 
 refs.libraryLink.addEventListener('click', onLibaryClick);
 
-let flag = true;
-
 function onLibaryClick(event) {
-  if (flag) {
-    event.preventDefault();
-    console.log('click on lib');
-    return;
-  }
+  event.preventDefault();
+  const user = auth.currentUser;
 
-  console.log('move to lib');
+  if (user) {
+    document.location.replace('./library.html');
+  } else {
+    Notify.warning('You need to sign in first!');
+  }
 }
 
 onAuthStateChanged(auth, user => {
+  const authBtnRefs = refs.authBtn.querySelector('button');
   if (user) {
-    flag = false;
-    console.log(user.displayName);
-    // return user.displayName;
+    if (authBtnRefs) {
+      refs.authBtn.querySelector('button').removeEventListener('click', onAuthInClick);
+    }
+
+    refs.authBtn.innerHTML = `
+	  	<button class="sign-btn signOut">
+          <span>Sign out</span>
+        </button>`;
+    refs.authBtn.querySelector('button').addEventListener('click', onAuthOutClick);
   } else {
-    flag = true;
-    console.log('User is signed out');
+    if (authBtnRefs) {
+      refs.authBtn.querySelector('button').removeEventListener('click', onAuthOutClick);
+    }
+
+    refs.authBtn.innerHTML = `
+		<button class="sign-btn signIn ">
+          <span>Sign in</span>
+        </button>`;
+    refs.authBtn.querySelector('button').addEventListener('click', onAuthInClick);
   }
 });
 
@@ -37,23 +53,3 @@ onAuthStateChanged(auth, user => {
 //     console.log('User is signed out');
 //   }
 // });
-
-// import { authService } from './authService.js';
-
-// console.log(authService.isUserSign());
-
-/****************************************** */
-
-// const flag = false;
-
-// refs.libraryLink.addEventListener('click', onLibaryClick);
-
-// function onLibaryClick(event) {
-//   if (flag) {
-//     event.preventDefault();
-//     console.log('click on lib');
-//     return;
-//   }
-
-//   console.log('move to lib');
-// }

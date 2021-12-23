@@ -1,8 +1,7 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 import { refs } from '../refs.js';
 import { registerUser, signInUser, signOutUser } from './authService.js';
-
-// refs.authInBtn.addEventListener('click', onAuthInClick);
-// refs.authOutBtn.addEventListener('click', onAuthOutClick);
 
 function onAuthOutClick() {
   signOutUser();
@@ -77,6 +76,20 @@ function onSignSubmit(event) {
   };
 
   signInUser(user);
+}
+
+//при нажатии на страницу библиотеки
+refs.libraryLink.addEventListener('click', onLibaryClick);
+
+function onLibaryClick(event) {
+  event.preventDefault();
+  const user = localStorage.getItem('userName');
+
+  if (user) {
+    document.location.replace('./library.html');
+  } else {
+    Notify.warning('You need to sign in first!');
+  }
 }
 
 export { onAuthInClick, onAuthOutClick };

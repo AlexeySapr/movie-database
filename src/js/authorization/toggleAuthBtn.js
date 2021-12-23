@@ -1,24 +1,7 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Loading } from 'notiflix/build/notiflix-loading-aio';
-
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebaseData.js';
 import { refs } from '../refs.js';
 import { onAuthInClick, onAuthOutClick } from './auth-form.js';
-import { signOutUser } from './authService.js';
-
-refs.libraryLink.addEventListener('click', onLibaryClick);
-
-function onLibaryClick(event) {
-  event.preventDefault();
-  const user = auth.currentUser;
-
-  if (user) {
-    document.location.replace('./library.html');
-  } else {
-    Notify.warning('You need to sign in first!');
-  }
-}
 
 onAuthStateChanged(auth, user => {
   const authBtnRefs = refs.authBtn.querySelector('button');
@@ -32,7 +15,7 @@ onAuthStateChanged(auth, user => {
     authBtnRefs.innerHTML = `<span>Sign out</span>`;
     authBtnRefs.addEventListener('click', onAuthOutClick);
 
-    addUsernameToLocalStorage(user.displayName);
+    localStorage.setItem('userName', JSON.stringify(user.displayName));
   } else {
     if (authBtnRefs.classList.contains('signOut')) {
       authBtnRefs.classList.remove('signOut');
@@ -42,14 +25,7 @@ onAuthStateChanged(auth, user => {
     authBtnRefs.classList.add('signIn');
     authBtnRefs.innerHTML = `<span>Sign in</span>`;
     authBtnRefs.addEventListener('click', onAuthInClick);
-    removeUsernameFromLocalStorage();
+
+    localStorage.removeItem('userName');
   }
 });
-
-function addUsernameToLocalStorage(userName) {
-  localStorage.setItem('userName', JSON.stringify(userName));
-}
-
-function removeUsernameFromLocalStorage() {
-  localStorage.setItem('userName', JSON.stringify(''));
-}

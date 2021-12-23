@@ -3,7 +3,6 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   signOut,
-  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from './firebaseData.js';
 import userIcon from '../../images/icons/user_icon.png';

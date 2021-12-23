@@ -102,8 +102,8 @@ module.exports="/movie-database/emty-film.915bfcc5.jpg";
 },{"notiflix/build/notiflix-notify-aio":"MeeU","notiflix/build/notiflix-loading-aio":"FqPt","./pagination.js":"o8lo","../js/refs.js":"VyiV","./modal-film-card.js":"MzUv","./up-btn.js":"e4yY","./localStorage.js":"nnQC"}],"U5J9":[function(require,module,exports) {
 (()=>{const e={openModalBtn:document.querySelector("[data-modal-open]"),closeModalBtn:document.querySelector("[data-modal-close]"),modal:document.querySelector("[data-modal]")};function o(){e.modal.classList.toggle("is-hidden"),document.body.classList.toggle("modal-open")}e.openModalBtn.addEventListener("click",o),e.closeModalBtn.addEventListener("click",o)})();
 },{}],"JHGN":[function(require,module,exports) {
-"use strict";var e=require("../refs.js");console.log(e.refs.authUser);
+"use strict";var e=require("../refs.js");const r=JSON.parse(localStorage.getItem("userName"));e.refs.authUser.innerHTML=`You sign in as "${r}"`;
 },{"../refs.js":"VyiV"}],"I9BA":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/film-library.js"),require("./js/modal-about-us.js"),require("./js/authorization/toggleShowUser.js");
 },{"./sass/main.scss":"clu1","./js/film-library.js":"AAfK","./js/modal-about-us.js":"U5J9","./js/authorization/toggleShowUser.js":"JHGN"}]},{},["I9BA"], null)
-//# sourceMappingURL=/movie-database/library.8422a79e.js.map
+//# sourceMappingURL=/movie-database/library.b9848975.js.map

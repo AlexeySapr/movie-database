@@ -1,7 +1,12 @@
 import { refs } from '../refs.js';
 import { registerUser, signInUser, signOutUser } from './authService.js';
 
-refs.authBtn.addEventListener('click', onAuthBtnClick);
+refs.authInBtn.addEventListener('click', onAuthBtnClick);
+refs.authOutBtn.addEventListener('click', onAuthOutClick);
+
+function onAuthOutClick() {
+  signOutUser();
+}
 
 //открытие модального окна
 function onAuthBtnClick() {

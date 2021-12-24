@@ -18,6 +18,7 @@ async function registerUser(newUser) {
       onCloseBtn();
     }
     Loading.remove();
+    location.reload();
   } catch (error) {
     Loading.remove();
     Notify.failure(error.code);

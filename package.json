@@ -6,7 +6,7 @@
   "homepage": "https://alexeysapr.github.io/movie-database",
   "scripts": {
     "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /movie-database/"
+    "build": "parcel build src/*.html --no-source-maps --no-minify"
   },
   "repository": {
     "type": "git",

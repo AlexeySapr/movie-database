@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebaseData.js';
 import { refs } from '../refs.js';
-import { onAuthInClick, onAuthOutClick } from './auth-form.js';
+import { onAuthInClick, onAuthOutClick } from './authModal.js';
 
 onAuthStateChanged(auth, user => {
   const authBtnRefs = refs.authBtn.querySelector('button');

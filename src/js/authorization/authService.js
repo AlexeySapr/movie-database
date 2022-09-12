@@ -1,24 +1,33 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-import { refs } from '../refs.js';
-import { onCloseBtn } from './auth-form.js';
-import AuthService from '../firebase/firebaseService.js';
-import { async } from '@firebase/util';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
+} from 'firebase/auth';
+import { auth } from '../firebase/firebaseData.js';
 
-const authService = new AuthService();
+import { refs } from '../refs.js';
+import { onCloseBtn } from './authModal.js';
 
 async function registerUser(newUser) {
+  const { name, email, password } = newUser;
   Loading.standard();
-  authService.user = newUser;
+
   try {
-    const userId = await authService.register();
-    if (userId) {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+
+    if (userCredential.user.uid) {
       refs.regFields.reset();
       onCloseBtn();
     }
     Loading.remove();
-    location.reload();
+    // location.reload();
   } catch (error) {
     Loading.remove();
     Notify.failure(error.code);
@@ -27,11 +36,11 @@ async function registerUser(newUser) {
 }
 
 async function signInUser(signUser) {
+  const { email, password } = signUser;
   Loading.standard();
-  authService.user = signUser;
   try {
-    const userId = await authService.signIn();
-    if (userId) {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    if (userCredential.user.uid) {
       refs.signFields.reset();
       onCloseBtn();
     }
@@ -45,9 +54,8 @@ async function signInUser(signUser) {
 
 async function signOutUser() {
   Loading.standard();
-  authService.user = {};
   try {
-    await authService.signUserOut();
+    await signOut(auth);
     Loading.remove();
   } catch (error) {
     Loading.remove();
@@ -55,10 +63,5 @@ async function signOutUser() {
     console.log(error.message);
   }
 }
-
-// setTimeout(() => {
-//   const name = authService.signInUserName;
-//   console.log(name);
-// }, 3000);
 
 export { registerUser, signInUser, signOutUser };

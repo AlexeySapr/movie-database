@@ -13,7 +13,7 @@ import SearchAPI from './apiService.js';
 const apiService = new SearchAPI();
 
 //Загружаем фильмы при загрузке страницы
-getData();
+// getData();
 
 //Функция загрузки популярных фильмов
 async function getData() {

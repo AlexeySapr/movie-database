@@ -66,23 +66,23 @@ function formatVideos(videosArr) {
 
 //экспорт функций запросов
 export default class SearchAPI {
-  #baseUrl = 'https://api.themoviedb.org/3';
-  #page = 1;
+  baseUrl = 'https://api.themoviedb.org/3';
+  page = 1;
 
   constructor() {
     this.searchQuery = '';
   }
 
   get page() {
-    return this.#page;
+    return this.page;
   }
 
   set page(numOfPage) {
-    this.#page = numOfPage;
+    this.page = numOfPage;
   }
 
   ressetPage() {
-    this.#page = 1;
+    this.page = 1;
   }
 
   //запрос на фильмы по ключевому слову или самые популярные
@@ -91,15 +91,11 @@ export default class SearchAPI {
     try {
       if (this.searchQuery) {
         response = await axios.get(
-          `${this.#baseUrl}/search/movie?language=en-US&query=${this.searchQuery}&page=${
-            this.#page
-          }&include_adult=false`,
+          `${this.baseUrl}/search/movie?language=en-US&query=${this.searchQuery}&page=${this.page}&include_adult=false`,
         );
       } else {
         response = await axios.get(
-          `${this.#baseUrl}/trending/movie/week?language=en-US&page=${
-            this.#page
-          }&include_adult=false`,
+          `${this.baseUrl}/trending/movie/week?language=en-US&page=${this.page}&include_adult=false`,
         );
       }
 
@@ -129,10 +125,10 @@ export default class SearchAPI {
 
     const arrayOfPromises = numOfFetch.map(async value => {
       if (value === 1) {
-        const response = await axios.get(`${this.#baseUrl}/movie/${movieId}`);
+        const response = await axios.get(`${this.baseUrl}/movie/${movieId}`);
         return response.data;
       } else {
-        const response = await axios.get(`${this.#baseUrl}/movie/${movieId}/videos`);
+        const response = await axios.get(`${this.baseUrl}/movie/${movieId}/videos`);
         return response.data.results;
       }
     });

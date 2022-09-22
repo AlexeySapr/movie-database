@@ -55517,6 +55517,12 @@ var _refs = require("../refs");
 
 var _authModal = require("../authorization/authModal");
 
+var FireStore = _interopRequireWildcard(require("../firebase/fireStoreService"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 // add/remove current user in local storage
 (0, _auth.onAuthStateChanged)(_firebaseData.auth, user => {
   const authBtnRefs = _refs.refs.authBtn.querySelector('button');
@@ -55534,6 +55540,18 @@ var _authModal = require("../authorization/authModal");
       name: user.displayName,
       email: user.email
     }));
+    FireStore.getMovies('watchedMovies').then(moviesArr => {
+      let moviesIdArr = moviesArr.map(movie => movie.id) || [];
+      localStorage.setItem('watchedMovies', JSON.stringify(moviesIdArr));
+    }).catch(err => {
+      console.log('err in onAuth: ', err.message);
+    });
+    FireStore.getMovies('queueMovies').then(moviesArr => {
+      let moviesIdArr = moviesArr.map(movie => movie.id) || [];
+      localStorage.setItem('queueMovies', JSON.stringify(moviesIdArr));
+    }).catch(err => {
+      console.log('err in onAuth: ', err.message);
+    });
   } else {
     if (authBtnRefs.classList.contains('signOut')) {
       authBtnRefs.classList.remove('signOut');
@@ -55543,11 +55561,12 @@ var _authModal = require("../authorization/authModal");
     authBtnRefs.classList.add('signIn');
     authBtnRefs.innerHTML = `<span>Sign in</span>`;
     authBtnRefs.addEventListener('click', _authModal.onAuthInClick);
-    localStorage.removeItem('user'); // localStorage.removeItem('watchedMovies');
-    // localStorage.removeItem('queueMovies');
+    localStorage.removeItem('user');
+    localStorage.removeItem('watchedMovies');
+    localStorage.removeItem('queueMovies');
   }
 });
-},{"firebase/auth":"zKjx","../firebase/firebaseData":"XiB0","../refs":"VyiV","../authorization/authModal":"nQZg"}],"lVxS":[function(require,module,exports) {
+},{"firebase/auth":"zKjx","../firebase/firebaseData":"XiB0","../refs":"VyiV","../authorization/authModal":"nQZg","../firebase/fireStoreService":"Kq8C"}],"lVxS":[function(require,module,exports) {
 "use strict";
 
 var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");

@@ -687,6 +687,11 @@ body.modal-open {
   }
 }
 
+.modal__queue-list.hidden,
+.modal__watch-list.hidden {
+  display: none;
+}
+
 .tui-pagination * {
   -moz-user-select: none;
   -webkit-user-select: none;

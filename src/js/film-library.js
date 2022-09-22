@@ -6,7 +6,6 @@ import { refs } from '../js/refs.js';
 import { showMoviesCards, showLibraryPage } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
-import { getLocalStorageMovies } from './localStorage.js';
 import * as FireStore from './firebase/fireStoreService';
 
 const currentPage = {

@@ -6,13 +6,7 @@ import SearchAPI from './apiService.js';
 import { pagination } from './pagination.js';
 import * as FireStore from './firebase/fireStoreService';
 
-import {
-  setMovieObj,
-  addRemoveWatched,
-  addRemoveQueue,
-  getLocalStorageMovies,
-  isInStorage,
-} from './localStorage.js';
+import { setMovieObj, addRemoveWatched, addRemoveQueue, isInStorage } from './localStorage.js';
 
 const apiService = new SearchAPI();
 

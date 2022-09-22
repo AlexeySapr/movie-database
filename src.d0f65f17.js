@@ -119,7 +119,387 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"clu1":[function(require,module,exports) {
 
-},{"./../images/pics/mobile-main-1x.jpg":[["mobile-main-1x.2d47a89a.jpg","TmF8"],"TmF8"],"./../images/pics/mobile-main-2x.jpg":[["mobile-main-2x.dd8772f0.jpg","q6kn"],"q6kn"],"./../images/pics/tablet-main-1x.jpg":[["tablet-main-1x.ea2ba746.jpg","hGtK"],"hGtK"],"./../images/pics/tablet-main-2x.jpg":[["tablet-main-2x.bc59deb7.jpg","EMGT"],"EMGT"],"./../images/pics/desktop-main-1x.jpg":[["desktop-main-1x.9fd2be17.jpg","Y5XE"],"Y5XE"],"./../images/pics/desktop-main-2x.jpg":[["desktop-main-2x.d9278608.jpg","IYmD"],"IYmD"],"/home/runner/work/movie-database/movie-database/src/images/cancel.png":[["cancel.4ad50c01.png","kn2I"],"kn2I"]}],"MeeU":[function(require,module,exports) {
+},{"./../images/pics/mobile-main-1x.jpg":[["mobile-main-1x.2d47a89a.jpg","TmF8"],"TmF8"],"./../images/pics/mobile-main-2x.jpg":[["mobile-main-2x.dd8772f0.jpg","q6kn"],"q6kn"],"./../images/pics/tablet-main-1x.jpg":[["tablet-main-1x.ea2ba746.jpg","hGtK"],"hGtK"],"./../images/pics/tablet-main-2x.jpg":[["tablet-main-2x.bc59deb7.jpg","EMGT"],"EMGT"],"./../images/pics/desktop-main-1x.jpg":[["desktop-main-1x.9fd2be17.jpg","Y5XE"],"Y5XE"],"./../images/pics/desktop-main-2x.jpg":[["desktop-main-2x.d9278608.jpg","IYmD"],"IYmD"],"/home/runner/work/movie-database/movie-database/src/images/cancel.png":[["cancel.4ad50c01.png","kn2I"],"kn2I"]}],"PZFh":[function(require,module,exports) {
+var global = arguments[3];
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        result = wait - timeSinceLastCall;
+
+    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = debounce;
+
+},{}],"MeeU":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /*
@@ -54082,50 +54462,10 @@ exports.addUserToFirestore = addUserToFirestore;
 exports.getMovies = getMovies;
 exports.removeMovie = removeMovie;
 
-var _util = require("@firebase/util");
-
 var _firestore = require("firebase/firestore");
 
 var _firebaseData = require("../firebase/firebaseData");
 
-// collection Users ref
-// const colUsersRef = collection(db, 'Users');
-//get all collection documents (get all Users)
-// getDocs(colUsersRef)
-//   .then(snapshot => {
-//     snapshot.docs.forEach(doc => {
-//       console.log('Doc data: ', doc.data());
-//       console.log('Doc id: ', doc.id);
-//     });
-//   })
-//   .catch(err => {
-//     console.log(err.message);
-//   });
-//get one doc in collection (get User)
-// const userId = 'test2@mail.com';
-// const docUserRef = doc(db, 'Users', userId);
-// getDoc(docUserRef).then(user => {
-//   // console.log('user.data: ', user.data());
-//   // console.log('user id: ', user.id);
-// });
-//get Users watchedMovies collection ref
-// const colUsersWatchedMoviesRef = collection(db, 'Users', userId, 'watchedMovies');
-// //get Users watchedMovies docs
-// getDocs(colUsersWatchedMoviesRef)
-//   .then(snapshot => {
-//     let watchedMoviesArr = [];
-//     snapshot.docs.forEach(doc => {
-//       watchedMoviesArr.push({ ...doc.data() });
-//       // console.log('watchedMovies data: ', doc.data());
-//       // console.log('watchedMovies id: ', doc.id);
-//     });
-//     // console.log('watchedMoviesArr: ', watchedMoviesArr);
-//   })
-//   .catch(err => {
-//     console.log(err.message);
-//   });
-
-/************************************************ */
 //add User to firestore
 async function addUserToFirestore(user) {
   try {
@@ -54181,35 +54521,8 @@ async function removeMovie(movieTitle, collectionName) {
   } catch (error) {
     console.log(error.message);
   }
-} //test!!!!!!!!!!!!!!!!!!
-
-
-async function getMoviesByPage(collectionName, page) {
-  const currentUser = JSON.parse(localStorage.getItem('user'));
-  const colUsersWatchedMoviesRef = (0, _firestore.collection)(_firebaseData.db, 'Users', currentUser.email, collectionName);
-  let watchedFirstArr = [];
-  const first = (0, _firestore.query)((0, _firestore.collection)(_firebaseData.db, 'Users', currentUser.email, collectionName), (0, _firestore.orderBy)('title', 'asc'), (0, _firestore.startAt)(3), (0, _firestore.limit)(20));
-  const documentSnapshots = await (0, _firestore.getDocs)(first);
-  documentSnapshots.docs.forEach(doc => {
-    watchedFirstArr.push({ ...doc.data()
-    });
-  });
-  console.log('watchedFirstArr: ', watchedFirstArr);
-  let watchedMoviesArr = [];
-
-  try {
-    const colSnapshot = await (0, _firestore.getDocs)(colUsersWatchedMoviesRef);
-    colSnapshot.docs.forEach(doc => {
-      watchedMoviesArr.push({ ...doc.data()
-      });
-    });
-    console.log('watchedMoviesArr: ', watchedMoviesArr);
-    return watchedMoviesArr;
-  } catch (error) {
-    console.log(error.message);
-  }
 }
-},{"@firebase/util":"chA2","firebase/firestore":"vHL5","../firebase/firebaseData":"XiB0"}],"nnQC":[function(require,module,exports) {
+},{"firebase/firestore":"vHL5","../firebase/firebaseData":"XiB0"}],"nnQC":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -54567,122 +54880,339 @@ function scrollToTop() {
   }, 600);
   return false;
 }
-},{}],"AAfK":[function(require,module,exports) {
+},{}],"Yzit":[function(require,module,exports) {
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _handlebars = _interopRequireDefault(require("handlebars/dist/handlebars.runtime"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const templateFunction = _handlebars.default.template({
+  "1": function (container, depth0, helpers, partials, data) {
+    var stack1,
+        helper,
+        alias1 = depth0 != null ? depth0 : container.nullContext || {},
+        alias2 = container.hooks.helperMissing,
+        alias3 = "function",
+        alias4 = container.escapeExpression,
+        lookupProperty = container.lookupProperty || function (parent, propertyName) {
+      if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+        return parent[propertyName];
+      }
+
+      return undefined;
+    };
+
+    return "<li class=\"film-list__item\" data-id-number='" + alias4((helper = (helper = lookupProperty(helpers, "id") || (depth0 != null ? lookupProperty(depth0, "id") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "id",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 44
+        },
+        "end": {
+          "line": 2,
+          "column": 50
+        }
+      }
+    }) : helper)) + "'>\n	<div class=\"thumb\">\n" + ((stack1 = lookupProperty(helpers, "if").call(alias1, depth0 != null ? lookupProperty(depth0, "poster_path") : depth0, {
+      "name": "if",
+      "hash": {},
+      "fn": container.program(2, data, 0),
+      "inverse": container.program(4, data, 0),
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 2
+        },
+        "end": {
+          "line": 10,
+          "column": 9
+        }
+      }
+    })) != null ? stack1 : "") + "	</div>\n	<div class=\"descr\">\n		<h4 class=\"descr__title\">" + alias4((helper = (helper = lookupProperty(helpers, "title") || (depth0 != null ? lookupProperty(depth0, "title") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "title",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 13,
+          "column": 27
+        },
+        "end": {
+          "line": 13,
+          "column": 36
+        }
+      }
+    }) : helper)) + "</h4>\n		<p class=\"descr__genres-year\">" + alias4((helper = (helper = lookupProperty(helpers, "genre_ids") || (depth0 != null ? lookupProperty(depth0, "genre_ids") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "genre_ids",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 14,
+          "column": 32
+        },
+        "end": {
+          "line": 14,
+          "column": 45
+        }
+      }
+    }) : helper)) + " | " + alias4((helper = (helper = lookupProperty(helpers, "release_date") || (depth0 != null ? lookupProperty(depth0, "release_date") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "release_date",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 14,
+          "column": 48
+        },
+        "end": {
+          "line": 14,
+          "column": 64
+        }
+      }
+    }) : helper)) + "</p>\n	</div>\n</li>\n";
+  },
+  "2": function (container, depth0, helpers, partials, data) {
+    var helper,
+        alias1 = depth0 != null ? depth0 : container.nullContext || {},
+        alias2 = container.hooks.helperMissing,
+        alias3 = "function",
+        alias4 = container.escapeExpression,
+        lookupProperty = container.lookupProperty || function (parent, propertyName) {
+      if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+        return parent[propertyName];
+      }
+
+      return undefined;
+    };
+
+    return "		<img srcset=\" https://image.tmdb.org/t/p/w300" + alias4((helper = (helper = lookupProperty(helpers, "poster_path") || (depth0 != null ? lookupProperty(depth0, "poster_path") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "poster_path",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 47
+        },
+        "end": {
+          "line": 5,
+          "column": 62
+        }
+      }
+    }) : helper)) + " 1x,\n 				https://image.tmdb.org/t/p/w780" + alias4((helper = (helper = lookupProperty(helpers, "poster_path") || (depth0 != null ? lookupProperty(depth0, "poster_path") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "poster_path",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 36
+        },
+        "end": {
+          "line": 6,
+          "column": 51
+        }
+      }
+    }) : helper)) + " 2x\" src='https://image.tmdb.org/t/p/w300" + alias4((helper = (helper = lookupProperty(helpers, "poster_path") || (depth0 != null ? lookupProperty(depth0, "poster_path") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+      "name": "poster_path",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 92
+        },
+        "end": {
+          "line": 6,
+          "column": 107
+        }
+      }
+    }) : helper)) + "'\n			alt=\"photo\">\n";
+  },
+  "4": function (container, depth0, helpers, partials, data) {
+    var helper,
+        lookupProperty = container.lookupProperty || function (parent, propertyName) {
+      if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+        return parent[propertyName];
+      }
+
+      return undefined;
+    };
+
+    return "		<img src='" + container.escapeExpression((helper = (helper = lookupProperty(helpers, "own_poster_path") || (depth0 != null ? lookupProperty(depth0, "own_poster_path") : depth0)) != null ? helper : container.hooks.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
+      "name": "own_poster_path",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 12
+        },
+        "end": {
+          "line": 9,
+          "column": 31
+        }
+      }
+    }) : helper)) + "' alt=\"photo\">\n";
+  },
+  "compiler": [8, ">= 4.3.0"],
+  "main": function (container, depth0, helpers, partials, data) {
+    var stack1,
+        lookupProperty = container.lookupProperty || function (parent, propertyName) {
+      if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+        return parent[propertyName];
+      }
+
+      return undefined;
+    };
+
+    return (stack1 = lookupProperty(helpers, "each").call(depth0 != null ? depth0 : container.nullContext || {}, depth0, {
+      "name": "each",
+      "hash": {},
+      "fn": container.program(1, data, 0),
+      "inverse": container.noop,
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 17,
+          "column": 9
+        }
+      }
+    })) != null ? stack1 : "";
+  },
+  "useData": true
+});
+
+var _default = templateFunction;
+exports.default = _default;
+},{"handlebars/dist/handlebars.runtime":"pAws"}],"qcBh":[function(require,module,exports) {
+"use strict";
+
+var _lodash = _interopRequireDefault(require("lodash.debounce"));
 
 var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");
 
 var _notiflixLoadingAio = require("notiflix/build/notiflix-loading-aio");
 
-var _pagination = require("./pagination.js");
+var _pagination = require("./pagination");
 
-var _refs = require("../js/refs.js");
+var _refs = require("./refs.js");
 
 var _modalFilmCard = require("./modal-film-card.js");
 
 var _upBtn = require("./up-btn.js");
 
-var _localStorage = require("./localStorage.js");
+var _filmCardTemplate = _interopRequireDefault(require("../templates/film-card-template.hbs"));
 
-var FireStore = _interopRequireWildcard(require("./firebase/fireStoreService"));
+var _apiService = _interopRequireDefault(require("./apiService.js"));
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+const apiService = new _apiService.default(); //Загружаем фильмы при загрузке страницы
 
-const currentPage = {
-  watched: true,
-  queue: false
-}; //Вешаем слушатели на кнопки при загрузке страницы библиотеки
+getData(); //Функция загрузки популярных фильмов
 
-window.addEventListener('load', onWatchedBtnClick);
+async function getData() {
+  try {
+    const movies = await apiService.getMovies();
 
-_refs.refs.watchedBtn.addEventListener('click', onWatchedBtnClick);
+    _pagination.pagination.reset(movies.total_results);
 
-_refs.refs.queueBtn.addEventListener('click', onQueueBtnClick); //Колбек при нажатии на кнопку "Watched"
+    showMovies(movies.results);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-
-function onWatchedBtnClick() {
-  _refs.refs.watchedBtn.classList.add('filter__btn--current');
-
-  _refs.refs.queueBtn.classList.remove('filter__btn--current');
-
-  currentPage.watched = true;
-  currentPage.queue = false;
-  const storageKey = 'watchedMovies';
-  const message = 'Your watched list is empty. Add any movie.';
-  renderGallery(storageKey, message);
-} //Колбек при нажатии на кнопку "Queue"
-
-
-function onQueueBtnClick() {
-  _refs.refs.queueBtn.classList.add('filter__btn--current');
-
-  _refs.refs.watchedBtn.classList.remove('filter__btn--current');
-
-  currentPage.watched = false;
-  currentPage.queue = true;
-  const storageKey = 'queueMovies';
-  const message = 'Your queue list is empty. Add any movie.';
-  renderGallery(storageKey, message);
-} //temp movies obj
+function showMovies(movies) {
+  _refs.refs.galleryList.innerHTML = (0, _filmCardTemplate.default)(movies);
+  const cards = document.querySelectorAll('.film-list__item');
+  cards.forEach(card => {
+    card.addEventListener('click', _modalFilmCard.openModalCard);
+  });
+}
+/*******************поиск по запросу******************************* */
 
 
-let watchedMoviesArr = [];
-let queueMoviesArr = []; //Функция рендера галереи
+const DEBOUNCE_DELAY = 700;
 
-function renderGallery(storageKey, message) {
-  _notiflixLoadingAio.Loading.standard();
+_refs.refs.inputSearch.addEventListener('input', (0, _lodash.default)(onInputSearch, DEBOUNCE_DELAY));
 
-  FireStore.getMovies(storageKey).then(moviesArr => {
-    if (!moviesArr.length) {
-      _notiflixNotifyAio.Notify.failure(message);
+_refs.refs.searchForm.addEventListener('submit', onInputSearch);
 
-      _refs.refs.galleryList.innerHTML = '';
-
-      _refs.refs.emptyLibrary.classList.remove('hidden');
-
-      _pagination.pagination.reset(0);
-
-      _notiflixLoadingAio.Loading.remove();
-
-      return;
-    } //save movies to temp obj
+async function onInputSearch(event) {
+  //при нажатии Enter - запрет перезагрузки страницы
+  if (event.type === 'submit') {
+    event.preventDefault();
+  } //при вводе запроса - записываем его в свойство "searchQuery"
 
 
-    storageKey === 'watchedMovies' ? watchedMoviesArr = [...moviesArr] : queueMoviesArr = [...moviesArr];
+  if (event.type === 'input') {
+    apiService.searchQuery = event.target.value.trim();
+  } //сбрасываем страницу на первую
 
-    _pagination.pagination.reset(moviesArr.length);
 
-    moviesArr.splice(18);
+  apiService.ressetPage(); //если запроса нет, т.е. пустая строка - грузим популярные фильмы
 
-    _refs.refs.emptyLibrary.classList.add('hidden');
+  if (!apiService.searchQuery) {
+    _notiflixLoadingAio.Loading.standard();
 
-    (0, _modalFilmCard.showMoviesCards)(moviesArr);
+    getData();
 
     _notiflixLoadingAio.Loading.remove();
-  }).catch(err => {
-    console.log('some err: ', err);
-  });
-} //функция пагинации
+
+    return;
+  } //иначе делаем запрос по введенному
+
+
+  try {
+    _notiflixLoadingAio.Loading.standard();
+
+    const movies = await apiService.getMovies();
+
+    _pagination.pagination.reset(movies.total_results);
+
+    _notiflixLoadingAio.Loading.remove();
+
+    if (movies.total_results > 0) {
+      showMovies(movies.results);
+
+      _notiflixNotifyAio.Notify.success(`Hooray! We found ${movies.total_results} movies.`);
+    } else {
+      _refs.refs.galleryList.innerHTML = '';
+
+      _notiflixNotifyAio.Notify.failure('Oops, there is no movies with that name.');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+} // Пагинация
 
 
 _pagination.pagination.on('afterMove', showNewPage);
 
-function showNewPage(event) {
-  let moviesArr;
-
-  if (currentPage.watched) {
-    moviesArr = watchedMoviesArr;
-  } else if (currentPage.queue) {
-    moviesArr = queueMoviesArr;
-  }
-
-  const page = event.page;
-  (0, _modalFilmCard.showLibraryPage)(moviesArr, page);
+async function showNewPage(event) {
+  apiService.page = event.page;
+  const movies = await apiService.getMovies();
+  showMovies(movies.results);
   (0, _upBtn.scrollToTop)();
 }
-},{"notiflix/build/notiflix-notify-aio":"MeeU","notiflix/build/notiflix-loading-aio":"FqPt","./pagination.js":"o8lo","../js/refs.js":"VyiV","./modal-film-card.js":"MzUv","./up-btn.js":"e4yY","./localStorage.js":"nnQC","./firebase/fireStoreService":"Kq8C"}],"U5J9":[function(require,module,exports) {
+},{"lodash.debounce":"PZFh","notiflix/build/notiflix-notify-aio":"MeeU","notiflix/build/notiflix-loading-aio":"FqPt","./pagination":"o8lo","./refs.js":"VyiV","./modal-film-card.js":"MzUv","./up-btn.js":"e4yY","../templates/film-card-template.hbs":"Yzit","./apiService.js":"eQwa"}],"U5J9":[function(require,module,exports) {
 (() => {
   const refs = {
     openModalBtn: document.querySelector('[data-modal-open]'),
@@ -54697,21 +55227,313 @@ function showNewPage(event) {
     document.body.classList.toggle('modal-open');
   }
 })();
-},{}],"GC14":[function(require,module,exports) {
+},{}],"VBUz":[function(require,module,exports) {
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.registerUser = registerUser;
+exports.signInUser = signInUser;
+exports.signOutUser = signOutUser;
+
+var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");
+
+var _notiflixLoadingAio = require("notiflix/build/notiflix-loading-aio");
+
+var _auth = require("firebase/auth");
+
+var _firebaseData = require("../firebase/firebaseData.js");
+
+var FireStore = _interopRequireWildcard(require("../firebase/fireStoreService"));
 
 var _refs = require("../refs.js");
 
-const currentUser = JSON.parse(localStorage.getItem('user'));
-_refs.refs.authUser.innerHTML = `You sign in as "${currentUser.name}"`;
-},{"../refs.js":"VyiV"}],"I9BA":[function(require,module,exports) {
+var _authModal = require("./authModal.js");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+async function registerUser(newUser) {
+  const {
+    name,
+    email,
+    password
+  } = newUser;
+
+  _notiflixLoadingAio.Loading.standard();
+
+  try {
+    const userCredential = await (0, _auth.createUserWithEmailAndPassword)(_firebaseData.auth, email, password);
+    await (0, _auth.updateProfile)(_firebaseData.auth.currentUser, {
+      displayName: name
+    });
+
+    if (userCredential.user.uid) {
+      _refs.refs.regFields.reset(); //add user to localStorage
+
+
+      localStorage.setItem('user', JSON.stringify({
+        name,
+        email
+      })); //add user to Firestore
+
+      await FireStore.addUserToFirestore(newUser);
+      (0, _authModal.onCloseBtn)();
+    }
+
+    _notiflixLoadingAio.Loading.remove(); // location.reload();
+
+  } catch (error) {
+    _notiflixLoadingAio.Loading.remove();
+
+    _notiflixNotifyAio.Notify.failure(error.code);
+
+    console.log(error.message);
+  }
+}
+
+async function signInUser(signUser) {
+  const {
+    email,
+    password
+  } = signUser;
+
+  _notiflixLoadingAio.Loading.standard();
+
+  try {
+    const userCredential = await (0, _auth.signInWithEmailAndPassword)(_firebaseData.auth, email, password);
+
+    if (userCredential.user.uid) {
+      _refs.refs.signFields.reset();
+
+      (0, _authModal.onCloseBtn)();
+    }
+
+    _notiflixLoadingAio.Loading.remove();
+  } catch (error) {
+    _notiflixLoadingAio.Loading.remove();
+
+    _notiflixNotifyAio.Notify.failure(error.code);
+
+    console.log(error.message);
+  }
+}
+
+async function signOutUser() {
+  _notiflixLoadingAio.Loading.standard();
+
+  try {
+    await (0, _auth.signOut)(_firebaseData.auth);
+
+    _notiflixLoadingAio.Loading.remove();
+  } catch (error) {
+    _notiflixLoadingAio.Loading.remove();
+
+    _notiflixNotifyAio.Notify.failure(error.code);
+
+    console.log(error.message);
+  }
+}
+},{"notiflix/build/notiflix-notify-aio":"MeeU","notiflix/build/notiflix-loading-aio":"FqPt","firebase/auth":"zKjx","../firebase/firebaseData.js":"XiB0","../firebase/fireStoreService":"Kq8C","../refs.js":"VyiV","./authModal.js":"nQZg"}],"nQZg":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.onAuthInClick = onAuthInClick;
+exports.onAuthOutClick = onAuthOutClick;
+exports.onCloseBtn = onCloseBtn;
+
+var _refs = require("../refs.js");
+
+var _authService = require("./authService.js");
+
+//открытие модального окна
+function onAuthInClick() {
+  _refs.refs.modalAuthCard.classList.remove('is-hidden');
+
+  document.body.classList.toggle('modal-open'); //слушатели на закрытие модалки и смену формы
+
+  _refs.refs.closeModalAuthCard.addEventListener('click', onCloseBtn);
+
+  _refs.refs.regLink.addEventListener('click', onRegBtnClick);
+
+  _refs.refs.signLink.addEventListener('click', onSingBtnClick); //на сабмит
+
+
+  _refs.refs.regFields.addEventListener('submit', onRegSubmit);
+
+  _refs.refs.signFields.addEventListener('submit', onSignSubmit);
+} //закрытие модального окна
+
+
+function onCloseBtn() {
+  _refs.refs.modalAuthCard.classList.add('is-hidden');
+
+  document.body.classList.toggle('modal-open');
+
+  _refs.refs.closeModalAuthCard.removeEventListener('click', onCloseBtn);
+
+  _refs.refs.regLink.removeEventListener('click', onRegBtnClick);
+
+  _refs.refs.signLink.removeEventListener('click', onSingBtnClick);
+
+  _refs.refs.regFields.removeEventListener('submit', onRegSubmit);
+
+  _refs.refs.signFields.removeEventListener('submit', onSignSubmit);
+}
+/*******смена формы***** */
+
+
+function onRegBtnClick(event) {
+  toggleForm(event);
+}
+
+function onSingBtnClick(event) {
+  toggleForm(event);
+}
+
+function toggleForm(event) {
+  event.preventDefault();
+
+  _refs.refs.regFields.classList.toggle('is-hidden');
+
+  _refs.refs.signFields.classList.toggle('is-hidden');
+}
+/************************* */
+//при сабмите регистр формы
+
+
+function onRegSubmit(event) {
+  event.preventDefault();
+  const {
+    name,
+    mail,
+    password
+  } = event.target.elements;
+  const user = {
+    name: name.value,
+    email: mail.value,
+    password: password.value
+  };
+  (0, _authService.registerUser)(user);
+} //при сабмите авторизац формы
+
+
+function onSignSubmit(event) {
+  event.preventDefault();
+  const {
+    mail,
+    password
+  } = event.target.elements;
+  const user = {
+    email: mail.value,
+    password: password.value
+  };
+  (0, _authService.signInUser)(user);
+} //при клике на выход из логина
+
+
+function onAuthOutClick() {
+  (0, _authService.signOutUser)();
+}
+},{"../refs.js":"VyiV","./authService.js":"VBUz"}],"ymgO":[function(require,module,exports) {
+"use strict";
+
+var _auth = require("firebase/auth");
+
+var _firebaseData = require("../firebase/firebaseData");
+
+var _refs = require("../refs");
+
+var _authModal = require("../authorization/authModal");
+
+var FireStore = _interopRequireWildcard(require("../firebase/fireStoreService"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// add/remove current user in local storage
+(0, _auth.onAuthStateChanged)(_firebaseData.auth, user => {
+  const authBtnRefs = _refs.refs.authBtn.querySelector('button');
+
+  if (user) {
+    if (authBtnRefs.classList.contains('signIn')) {
+      authBtnRefs.classList.remove('signIn');
+      authBtnRefs.removeEventListener('click', _authModal.onAuthInClick);
+    }
+
+    authBtnRefs.classList.add('signOut');
+    authBtnRefs.innerHTML = `<span>Sign out</span>`;
+    authBtnRefs.addEventListener('click', _authModal.onAuthOutClick);
+    localStorage.setItem('user', JSON.stringify({
+      name: user.displayName,
+      email: user.email
+    }));
+    FireStore.getMovies('watchedMovies').then(moviesArr => {
+      let moviesIdArr = moviesArr.map(movie => movie.id) || [];
+      localStorage.setItem('watchedMovies', JSON.stringify(moviesIdArr));
+    }).catch(err => {
+      console.log('err in onAuth: ', err.message);
+    });
+    FireStore.getMovies('queueMovies').then(moviesArr => {
+      let moviesIdArr = moviesArr.map(movie => movie.id) || [];
+      localStorage.setItem('queueMovies', JSON.stringify(moviesIdArr));
+    }).catch(err => {
+      console.log('err in onAuth: ', err.message);
+    });
+  } else {
+    if (authBtnRefs.classList.contains('signOut')) {
+      authBtnRefs.classList.remove('signOut');
+      authBtnRefs.removeEventListener('click', _authModal.onAuthOutClick);
+    }
+
+    authBtnRefs.classList.add('signIn');
+    authBtnRefs.innerHTML = `<span>Sign in</span>`;
+    authBtnRefs.addEventListener('click', _authModal.onAuthInClick);
+    localStorage.removeItem('user');
+    localStorage.removeItem('watchedMovies');
+    localStorage.removeItem('queueMovies');
+  }
+});
+},{"firebase/auth":"zKjx","../firebase/firebaseData":"XiB0","../refs":"VyiV","../authorization/authModal":"nQZg","../firebase/fireStoreService":"Kq8C"}],"lVxS":[function(require,module,exports) {
+"use strict";
+
+var _notiflixNotifyAio = require("notiflix/build/notiflix-notify-aio");
+
+var _refs = require("./refs.js");
+
+//при нажатии на страницу библиотеки
+_refs.refs.libraryLink.addEventListener('click', onLibaryClick);
+
+function onLibaryClick(event) {
+  event.preventDefault();
+  const user = localStorage.getItem('user');
+  console.log('user: ', user);
+
+  if (user) {
+    document.location.replace('./library.html');
+  } else {
+    _notiflixNotifyAio.Notify.warning('You need to sign in first!');
+  }
+}
+},{"notiflix/build/notiflix-notify-aio":"MeeU","./refs.js":"VyiV"}],"Focm":[function(require,module,exports) {
 "use strict";
 
 require("./sass/main.scss");
 
-require("./js/film-library.js");
+require("./js/film-container.js");
 
 require("./js/modal-about-us.js");
 
-require("./js/authorization/showCurrentUser.js");
-},{"./sass/main.scss":"clu1","./js/film-library.js":"AAfK","./js/modal-about-us.js":"U5J9","./js/authorization/showCurrentUser.js":"GC14"}]},{},["I9BA"], null)
+require("./js/authorization/authModal.js");
+
+require("./js/localStorage/onAuthStateChanged.js");
+
+require("./js/onLibaryClick.js");
+
+require("./js/firebase/fireStoreService");
+},{"./sass/main.scss":"clu1","./js/film-container.js":"qcBh","./js/modal-about-us.js":"U5J9","./js/authorization/authModal.js":"nQZg","./js/localStorage/onAuthStateChanged.js":"ymgO","./js/onLibaryClick.js":"lVxS","./js/firebase/fireStoreService":"Kq8C"}]},{},["Focm"], null)

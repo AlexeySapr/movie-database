@@ -3,10 +3,11 @@ import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { pagination } from './pagination.js';
 
 import { refs } from '../js/refs.js';
-import { showMoviesCards } from './modal-film-card.js';
+import { showMoviesCards, showLibraryPage } from './modal-film-card.js';
 import { scrollToTop } from './up-btn.js';
 
 import { getLocalStorageMovies } from './localStorage.js';
+import * as FireStore from './firebase/fireStoreService';
 
 const currentPage = {
   watched: true,
@@ -46,25 +47,38 @@ function onQueueBtnClick() {
   renderGallery(storageKey, message);
 }
 
+//temp movies obj
+let watchedMoviesArr = [];
+let queueMoviesArr = [];
+
 //Функция рендера галереи
 function renderGallery(storageKey, message) {
   Loading.standard();
-  const moviesArr = getLocalStorageMovies(storageKey);
+  FireStore.getMovies(storageKey)
+    .then(moviesArr => {
+      if (!moviesArr.length) {
+        Notify.failure(message);
+        refs.galleryList.innerHTML = '';
+        refs.emptyLibrary.classList.remove('hidden');
+        pagination.reset(0);
+        Loading.remove();
+        return;
+      }
 
-  if (!moviesArr.length) {
-    Notify.failure(message);
-    refs.galleryList.innerHTML = '';
-    refs.emptyLibrary.classList.remove('hidden');
-    pagination.reset(0);
-    Loading.remove();
-    return;
-  }
+      //save movies to temp obj
+      storageKey === 'watchedMovies'
+        ? (watchedMoviesArr = [...moviesArr])
+        : (queueMoviesArr = [...moviesArr]);
 
-  pagination.reset(moviesArr.length);
-  moviesArr.splice(20);
-  refs.emptyLibrary.classList.add('hidden');
-  showMoviesCards(moviesArr);
-  Loading.remove();
+      pagination.reset(moviesArr.length);
+      moviesArr.splice(18);
+      refs.emptyLibrary.classList.add('hidden');
+      showMoviesCards(moviesArr);
+      Loading.remove();
+    })
+    .catch(err => {
+      console.log('some err: ', err);
+    });
 }
 
 //функция пагинации
@@ -74,20 +88,13 @@ function showNewPage(event) {
   let moviesArr;
 
   if (currentPage.watched) {
-    moviesArr = getLocalStorageMovies(`watchedMovies`);
+    moviesArr = watchedMoviesArr;
   } else if (currentPage.queue) {
-    moviesArr = getLocalStorageMovies(`queueMovies`);
+    moviesArr = queueMoviesArr;
   }
 
   const page = event.page;
-  if (page === 1) {
-    moviesArr.splice(20);
-    showMoviesCards(moviesArr);
-  } else {
-    const startPageItem = page * 20 - 20;
-    const endPageItem = startPageItem + 20;
-    const pageToShow = moviesArr.slice(startPageItem, endPageItem);
-    showMoviesCards(pageToShow);
-  }
+
+  showLibraryPage(moviesArr, page);
   scrollToTop();
 }

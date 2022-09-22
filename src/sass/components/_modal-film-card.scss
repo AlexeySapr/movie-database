@@ -306,3 +306,8 @@
     margin-right: 25px;
   }
 }
+
+.modal__queue-list.hidden,
+.modal__watch-list.hidden {
+  display: none;
+}

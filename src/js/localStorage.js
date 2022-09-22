@@ -1,6 +1,8 @@
-import emtyFilmCard from '../images/emty-film.jpg';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
+import * as FireStore from './firebase/fireStoreService';
 
-const movieObj = {};
+let movieObj = {};
 
 function setMovieObj({
   id,
@@ -14,17 +16,18 @@ function setMovieObj({
   release_date,
   overview,
 }) {
-  movieObj.id = id;
-  movieObj.poster_path = poster_path;
-  movieObj.title = title;
-  movieObj.vote_average = vote_average;
-  movieObj.vote_count = vote_count;
-  movieObj.popularity = popularity;
-  movieObj.original_title = original_title;
-  movieObj.genres = genres;
-  movieObj.release_date = release_date;
-  movieObj.overview = overview;
-  movieObj.own_poster_path = emtyFilmCard;
+  movieObj = {
+    id,
+    poster_path,
+    title,
+    vote_average,
+    vote_count,
+    popularity,
+    original_title,
+    genres,
+    release_date,
+    overview,
+  };
 }
 
 function getLocalStorageMovies(keyItem) {
@@ -37,24 +40,52 @@ function getLocalStorageMovies(keyItem) {
   }
 }
 
-function isInStorage(movieObj, keyItem) {
-  return getLocalStorageMovies(keyItem).some(movie => {
-    return movie.id === movieObj.id;
+function isInStorage(movieId, keyItem) {
+  return getLocalStorageMovies(keyItem).some(id => {
+    return id === movieId;
   });
 }
 
 /******************add remove***************** */
-function removeFromLocalStorage(movieObj, key) {
-  const newMoviesArr = getLocalStorageMovies(key).filter(movie => movie.id != movieObj.id);
+function removeFromLocalStorage(movieId, key) {
+  const newMoviesArr = getLocalStorageMovies(key).filter(id => id != movieId);
   localStorage.setItem(key, JSON.stringify(newMoviesArr));
 }
 
-function addToLocalStorage(movieObj, key) {
-  const watchedMoviesArr = getLocalStorageMovies(key);
-  watchedMoviesArr.push(movieObj);
-  localStorage.setItem(key, JSON.stringify(watchedMoviesArr));
+function addToLocalStorage(movieId, key) {
+  const moviesArr = getLocalStorageMovies(key);
+  moviesArr.push(movieId);
+  localStorage.setItem(key, JSON.stringify(moviesArr));
 }
 /*********************************** */
+
+function addMovie(movieObj, key) {
+  FireStore.addMovie(movieObj, key)
+    .then(res => {
+      if (res === 'ok') {
+        Notify.success('Movie added');
+        addToLocalStorage(movieObj.id, key);
+      }
+    })
+    .catch(() => {
+      Notify.failure('Something wrong!');
+    });
+}
+
+function removeMovie(movieObj, key) {
+  console.log('movieObj: ', movieObj.title);
+
+  FireStore.removeMovie(movieObj.title, key)
+    .then(res => {
+      if (res === 'ok') {
+        Notify.success('Movie deleted');
+        removeFromLocalStorage(movieObj.id, key);
+      }
+    })
+    .catch(() => {
+      Notify.failure('Something wrong!');
+    });
+}
 
 /******************listener********************* */
 function addRemoveWatched(event) {
@@ -62,17 +93,20 @@ function addRemoveWatched(event) {
   const key = 'watchedMovies';
 
   //если фильм есть - удаляем
-  if (isInStorage(movieObj, key)) {
+  if (isInStorage(movieObj.id, key)) {
     refWatchBtn.classList.remove('inStorage');
     refWatchBtn.textContent = 'ADD TO WATCHED';
-    removeFromLocalStorage(movieObj, key);
+    removeMovie(movieObj, key);
+    // removeFromLocalStorage(movieObj.id, key);
     return;
   }
 
   //иначе добавляем в локал
+  Loading.standard();
   refWatchBtn.classList.add('inStorage');
   refWatchBtn.textContent = 'REMOVE WATCHED';
-  addToLocalStorage(movieObj, key);
+  addMovie(movieObj, key);
+  Loading.remove();
 }
 
 function addRemoveQueue(event) {
@@ -80,17 +114,20 @@ function addRemoveQueue(event) {
   const key = 'queueMovies';
 
   //если фильм есть - удаляем
-  if (isInStorage(movieObj, key)) {
+  if (isInStorage(movieObj.id, key)) {
     refQueueBtn.classList.remove('inStorage');
     refQueueBtn.textContent = 'ADD TO QUEUE';
-    removeFromLocalStorage(movieObj, key);
+    removeMovie(movieObj, key);
+    // removeFromLocalStorage(movieObj.id, key);
     return;
   }
 
   //иначе добавляем в локал
+  Loading.standard();
   refQueueBtn.classList.add('inStorage');
   refQueueBtn.textContent = 'REMOVE QUEUE';
-  addToLocalStorage(movieObj, key);
+  addMovie(movieObj, key);
+  Loading.remove();
 }
 
 export { setMovieObj, addRemoveWatched, addRemoveQueue, getLocalStorageMovies, isInStorage };

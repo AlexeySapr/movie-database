@@ -8,6 +8,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import { auth } from '../firebase/firebaseData.js';
+import * as FireStore from '../firebase/fireStoreService';
 
 import { refs } from '../refs.js';
 import { onCloseBtn } from './authModal.js';
@@ -24,6 +25,19 @@ async function registerUser(newUser) {
 
     if (userCredential.user.uid) {
       refs.regFields.reset();
+
+      //add user to localStorage
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          name,
+          email,
+        }),
+      );
+
+      //add user to Firestore
+      await FireStore.addUserToFirestore(newUser);
+
       onCloseBtn();
     }
     Loading.remove();

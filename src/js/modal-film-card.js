@@ -4,6 +4,7 @@ import libCard from '../templates/library-film-card-template.hbs';
 import { refs } from './refs.js';
 import SearchAPI from './apiService.js';
 import { pagination } from './pagination.js';
+import * as FireStore from './firebase/fireStoreService';
 
 import {
   setMovieObj,
@@ -35,21 +36,34 @@ function openModalCard(evt) {
 async function getFilmInfo(filmId) {
   try {
     const filmInfo = await apiService.getMovieById(filmId);
-    // console.log(filmInfo);
     refs.modalCard.innerHTML = filmCard(filmInfo);
     setMovieObj(filmInfo);
 
     const refWatchBtn = document.querySelector('.modal__watch-list');
     const refQueueBtn = document.querySelector('.modal__queue-list');
 
-    if (isInStorage(filmInfo, 'watchedMovies')) {
+    /* Hide buttons when user isn`t loged in*/
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+
+    if (!currentUser) {
+      refWatchBtn.classList.add('hidden');
+      refQueueBtn.classList.add('hidden');
+    } else {
+      refWatchBtn.classList.remove('hidden');
+      refQueueBtn.classList.remove('hidden');
+    }
+
+    /*************************************************/
+
+    if (isInStorage(filmInfo.id, 'watchedMovies')) {
       refWatchBtn.classList.add('inStorage');
       refWatchBtn.textContent = 'REMOVE WATCHED';
     }
-    if (isInStorage(filmInfo, 'queueMovies')) {
+    if (isInStorage(filmInfo.id, 'queueMovies')) {
       refQueueBtn.classList.add('inStorage');
       refQueueBtn.textContent = 'REMOVE QUEUE';
     }
+
     refWatchBtn.addEventListener('click', addRemoveWatched);
     refQueueBtn.addEventListener('click', addRemoveQueue);
   } catch (error) {
@@ -68,26 +82,37 @@ function closeModalCard() {
   if (window.location.pathname === '/library.html') {
     const isInWatched = refs.watchedBtn.classList.contains('filter__btn--current');
     if (isInWatched) {
-      const moviesArr = getLocalStorageMovies('watchedMovies');
-      const page = pagination.getCurrentPage();
-      showLibraryPage(moviesArr, page);
+      FireStore.getMovies('watchedMovies')
+        .then(moviesArr => {
+          const page = pagination.getCurrentPage();
+          showLibraryPage(moviesArr, page);
+        })
+        .catch(err => {
+          console.log('some err: ', err);
+        });
     } else {
-      const moviesArr = getLocalStorageMovies('queueMovies');
-      const page = pagination.getCurrentPage();
-      showLibraryPage(moviesArr, page);
+      FireStore.getMovies('queueMovies')
+        .then(moviesArr => {
+          const page = pagination.getCurrentPage();
+          showLibraryPage(moviesArr, page);
+        })
+        .catch(err => {
+          console.log('some err: ', err);
+        });
     }
   }
+
   document.querySelector('.modal__watch-list').removeEventListener('click', addRemoveWatched);
   document.querySelector('.modal__queue-list').removeEventListener('click', addRemoveQueue);
 }
 
 function showLibraryPage(moviesArr, page) {
   if (page === 1) {
-    moviesArr.splice(20);
+    moviesArr.splice(18);
     showMoviesCards(moviesArr);
   } else {
-    const startPageItem = page * 20 - 20;
-    const endPageItem = startPageItem + 20;
+    const startPageItem = page * 18 - 18;
+    const endPageItem = startPageItem + 18;
     const pageToShow = moviesArr.slice(startPageItem, endPageItem);
     showMoviesCards(pageToShow);
   }
@@ -137,4 +162,4 @@ function onEscKeyPress(evt) {
   }
 }
 
-export { openModalCard, showMoviesCards };
+export { openModalCard, showMoviesCards, showLibraryPage };

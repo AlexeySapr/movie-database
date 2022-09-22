@@ -1,8 +1,9 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase/firebaseData.js';
-import { refs } from '../refs.js';
-import { onAuthInClick, onAuthOutClick } from './authModal.js';
+import { auth } from '../firebase/firebaseData';
+import { refs } from '../refs';
+import { onAuthInClick, onAuthOutClick } from '../authorization/authModal';
 
+// add/remove current user in local storage
 onAuthStateChanged(auth, user => {
   const authBtnRefs = refs.authBtn.querySelector('button');
   if (user) {
@@ -15,7 +16,13 @@ onAuthStateChanged(auth, user => {
     authBtnRefs.innerHTML = `<span>Sign out</span>`;
     authBtnRefs.addEventListener('click', onAuthOutClick);
 
-    localStorage.setItem('userName', JSON.stringify(user.displayName));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        name: user.displayName,
+        email: user.email,
+      }),
+    );
   } else {
     if (authBtnRefs.classList.contains('signOut')) {
       authBtnRefs.classList.remove('signOut');
@@ -26,6 +33,8 @@ onAuthStateChanged(auth, user => {
     authBtnRefs.innerHTML = `<span>Sign in</span>`;
     authBtnRefs.addEventListener('click', onAuthInClick);
 
-    localStorage.removeItem('userName');
+    localStorage.removeItem('user');
+    // localStorage.removeItem('watchedMovies');
+    // localStorage.removeItem('queueMovies');
   }
 });

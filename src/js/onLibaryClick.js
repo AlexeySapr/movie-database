@@ -6,7 +6,7 @@ refs.libraryLink.addEventListener('click', onLibaryClick);
 
 function onLibaryClick(event) {
   event.preventDefault();
-  const user = localStorage.getItem('userName');
+  const user = localStorage.getItem('user');
   console.log('user: ', user);
 
   if (user) {
